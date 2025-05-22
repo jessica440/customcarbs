@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import jacketImage from "../images/custom.jpg";
 import { Link } from "react-router-dom";
+import Pointer from "../images/pointer2.svg";
 
 const JacketWrapper = styled.div`
   position: relative;
@@ -35,6 +36,7 @@ const CustomiseLabel = styled(Link)`
   font-size: 2rem;
   border-radius: 2px;
   text-decoration: none;
+  cursor: url(${Pointer}) 0 0, pointer;
   transition: background 0.3s;
   &:hover {
     background: var(--green);

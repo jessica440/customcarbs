@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import CustomJacketCard from "../components/CustomJacketCard";
 import SwatchSelector from "../components/SwatchSelector";
+import Pointer from "../images/pointer2.svg";
 
 const PageContainer = styled.div`
   display: flex;
@@ -44,8 +45,11 @@ const ProceedButton = styled(Link)`
   margin-top: 2rem;
   border: none;
   border-radius: 50px;
-  cursor: pointer;
+  cursor: url(${Pointer}) 0 0, pointer;
   text-decoration: none;
+  &:hover {
+    background-color: var(--purple);
+  }
 `;
 
 const CustomOrders = () => {
@@ -67,10 +71,11 @@ const CustomOrders = () => {
           you’d like to change, then pick a swatch from the options on the
           right. <br />
           3. Add optional extras: pockets, hoods… <br />
-          4. See your design come to life, then place your order! Each jacket is
-          made just for you, so please allow <b>up to 21 working days</b> for
-          production (shipping time not included). Keep an eye on your inbox in
-          case we need to chat about stock or design tweaks. <br /> <br />
+          4. See your design come to life, then place your order! <br />
+          Each jacket is made just for you, so please allow{" "}
+          <b>up to 21 working days</b> for production (shipping time not
+          included). Keep an eye on your inbox in case we need to chat about
+          stock or design tweaks. <br /> <br />
           <b>Not sure where to start?</b> <br /> Check out some of these past
           designs for inspiration!{" "}
         </Paragraph>
