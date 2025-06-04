@@ -41,7 +41,7 @@ export const OptionsPanel = styled.div`
 `;
 
 export const OptionTitle = styled.h3`
-  background: #cfd;
+  background: var(--green);
   padding: 0.5rem;
   font-weight: bold;
   font-size: 1rem;
@@ -121,8 +121,11 @@ export const Swatch = styled.img`
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid white;
+  border: 4px solid white;
   cursor: url(${Pointer}) 0 0, pointer;
+  &:hover {
+    border: 4px solid var(--purple);
+  }
 `;
 
 export const Summary = styled.div`

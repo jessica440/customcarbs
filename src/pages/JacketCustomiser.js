@@ -1,10 +1,12 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import Pointer from "../images/pointer2.svg";
 import ProceedButton from "../components/ProceedButton";
 import fabricOptions from "../functions/swatches.js";
+import JacketSVG from "../functions/jacket.js";
+
 import {
   Wrapper,
   Header,
@@ -18,7 +20,6 @@ import {
   ArmOption,
   ArmImage,
   JacketDisplay,
-  JacketSVGPlaceholder,
   CategoryTitle,
   FabricPicker,
   Swatches,
@@ -31,11 +32,6 @@ import {
   SelectedLabel,
   PriceLabel,
 } from "./JacketCustomiserStyle";
-
-const PageContainer = styled.div`
-  padding: 2rem;
-  font-family: "Poppins", sans-serif;
-`;
 
 const BackButton = styled.button`
   display: inline-block;
@@ -54,16 +50,27 @@ const BackButton = styled.button`
   &:hover {
     background-color: var(--purple);
   }
-  /* img {
-    height: 0.8rem;
-    width: auto;
-    margin-right: 0.5rem;
-  } */
 `;
 
 const JacketCustomiser = () => {
-  const [panelType, setPanelType] = useState("2");
   const navigate = useNavigate();
+  const [panelType, setPanelType] = useState("2");
+  const [selectedPanel, setSelectedPanel] = useState(null);
+  const [panelFills, setPanelFills] = useState({});
+
+  const handlePanelClick = (panel) => {
+    setSelectedPanel(panel);
+  };
+
+  const handleSwatchClick = (imgUrl) => {
+    if (selectedPanel) {
+      setPanelFills((prev) => ({
+        ...prev,
+        [selectedPanel]: imgUrl,
+      }));
+    }
+  };
+
   return (
     <Wrapper>
       <Header>
@@ -73,10 +80,9 @@ const JacketCustomiser = () => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit...
         </Subtitle>
       </Header>
-      <BackButton onClick={() => navigate(-1)}>
-        {/* <img src={backIcon} alt="Back" /> */}
-        Back
-      </BackButton>
+
+      <BackButton onClick={() => navigate(-1)}>Back</BackButton>
+
       <CustomiserLayout>
         <OptionsPanel>
           <OptionTitle>advanced options</OptionTitle>
@@ -109,17 +115,18 @@ const JacketCustomiser = () => {
         </OptionsPanel>
 
         <JacketDisplay>
-          <JacketSVGPlaceholder>
-            {" "}
-            {/* Replace with your actual SVG later */}{" "}
-          </JacketSVGPlaceholder>
+          <JacketSVG onPanelClick={handlePanelClick} panelFills={panelFills} />
         </JacketDisplay>
 
         <FabricPicker>
           <CategoryTitle>top arm</CategoryTitle>
           <Swatches>
-            {fabricOptions.map((src, i) => (
-              <Swatch key={i} src={src} />
+            {fabricOptions.map((img, i) => (
+              <Swatch
+                key={i}
+                src={img}
+                onClick={() => handleSwatchClick(img)}
+              />
             ))}
           </Swatches>
           <ExtrasLabel>extras</ExtrasLabel>
