@@ -8,6 +8,7 @@ import fabricOptions from "../functions/swatches.js";
 import JacketSVG from "../functions/jacket.js";
 
 import {
+  SVGWrapper,
   Wrapper,
   Header,
   Brand,
@@ -68,6 +69,7 @@ const JacketCustomiser = () => {
         ...prev,
         [selectedPanel]: imgUrl,
       }));
+      setSelectedPanel(null);
     }
   };
 
@@ -115,7 +117,11 @@ const JacketCustomiser = () => {
         </OptionsPanel>
 
         <JacketDisplay>
-          <JacketSVG onPanelClick={handlePanelClick} panelFills={panelFills} />
+          <JacketSVG
+            onPanelClick={handlePanelClick}
+            panelFills={panelFills}
+            selectedPanel={selectedPanel}
+          />
         </JacketDisplay>
 
         <FabricPicker>

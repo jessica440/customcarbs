@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import Pointer from "../images/pointer2.svg";
 
+export const SVGWrapper = styled.div`
+  .clickable-panel {
+    cursor: url(${Pointer}) 0 0, pointer;
+  }
+`;
+
 export const Wrapper = styled.div`
   padding: 2rem;
   font-family: "Arial", sans-serif;
@@ -79,6 +85,12 @@ export const JacketDisplay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  .clickable-panel {
+    cursor: url(${Pointer}) 0 0, pointer;
+    &:hover {
+      fill: var(--purple);
+    }
+  }
 `;
 
 export const JacketSVGPlaceholder = styled.div`
