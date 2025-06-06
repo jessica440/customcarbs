@@ -31,6 +31,7 @@ import {
   Price,
   SelectedLabel,
   PriceLabel,
+  MirrorOption,
 } from "./JacketCustomiserStyle";
 
 const BackButton = styled.button`
@@ -62,30 +63,56 @@ const JacketCustomiser = () => {
   const handlePanelClick = (panel) => {
     if (!mirrorSides) {
       setSelectedPanel(panel);
-    } else {
-      switch (panel) {
-        case "upper-left-arm":
-        case "upper-right-arm":
-          setSelectedPanel("arms-top");
-          break;
-        case "lower-left-arm":
-        case "lower-right-arm":
-          setSelectedPanel("arms-bottom");
-          break;
-        case "body-left-top":
-        case "body-right-top":
-          setSelectedPanel("body-top");
-          break;
-        case "body-left-lower":
-        case "body-right-lower":
-          setSelectedPanel("body-bottom");
-          break;
-        default:
-          setSelectedPanel(panel);
+      return;
+    }
+
+    // --- 3-panel arm mirroring ---
+    if (panelType === "3") {
+      if (["arm-top-left", "arm-top-right"].includes(panel)) {
+        setSelectedPanel("arms-top");
+        return;
+      }
+      if (["arm-middle-left", "arm-middle-right"].includes(panel)) {
+        setSelectedPanel("arms-middle");
+        return;
+      }
+      if (["arm-bottom-left", "arm-bottom-right"].includes(panel)) {
+        setSelectedPanel("arms-bottom");
+        return;
       }
     }
-  };
 
+    // --- 2-panel arm mirroring ---
+    else {
+      if (["upper-left-arm", "upper-right-arm"].includes(panel)) {
+        setSelectedPanel("arms-top");
+        return;
+      }
+      if (["lower-left-arm", "lower-right-arm"].includes(panel)) {
+        setSelectedPanel("arms-bottom");
+        return;
+      }
+    }
+
+    // --- Body mirroring (works in both modes) ---
+    if (["body-left-top", "body-right-top"].includes(panel)) {
+      setSelectedPanel("body-top");
+      return;
+    }
+    if (["body-left-lower", "body-right-lower"].includes(panel)) {
+      setSelectedPanel("body-bottom");
+      return;
+    }
+
+    // --- Wristbands or others ---
+    if (["wristband-left", "wristband-right"].includes(panel)) {
+      setSelectedPanel("wristbands");
+      return;
+    }
+
+    // Default single panel
+    setSelectedPanel(panel);
+  };
   const handleSwatchClick = (imgUrl) => {
     if (!selectedPanel) return;
 
@@ -93,28 +120,59 @@ const JacketCustomiser = () => {
       const updated = { ...prev };
 
       switch (selectedPanel) {
+        // Arm mirroring
         case "arms-top":
-          updated["upper-left-arm"] = imgUrl;
-          updated["upper-right-arm"] = imgUrl;
+          if (panelType === "3") {
+            updated["arm-top-left"] = imgUrl;
+            updated["arm-top-right"] = imgUrl;
+          } else {
+            updated["upper-left-arm"] = imgUrl;
+            updated["upper-right-arm"] = imgUrl;
+          }
           break;
+
+        case "arms-middle":
+          updated["arm-middle-left"] = imgUrl;
+          updated["arm-middle-right"] = imgUrl;
+          break;
+
         case "arms-bottom":
-          updated["lower-left-arm"] = imgUrl;
-          updated["lower-right-arm"] = imgUrl;
+          if (panelType === "3") {
+            updated["arm-bottom-left"] = imgUrl;
+            updated["arm-bottom-right"] = imgUrl;
+          } else {
+            updated["lower-left-arm"] = imgUrl;
+            updated["lower-right-arm"] = imgUrl;
+          }
           break;
+
+        // Body mirroring
         case "body-top":
           updated["body-left-top"] = imgUrl;
           updated["body-right-top"] = imgUrl;
           break;
+
         case "body-bottom":
           updated["body-left-lower"] = imgUrl;
           updated["body-right-lower"] = imgUrl;
           break;
+
+        // Optional: wristband mirroring
+        case "wristbands":
+          updated["wristband-left"] = imgUrl;
+          updated["wristband-right"] = imgUrl;
+          break;
+
+        // Default — single panel
         default:
           updated[selectedPanel] = imgUrl;
+          break;
       }
 
       return updated;
     });
+
+    setSelectedPanel(null); // Optional: keep selected if you want to pick multiple
   };
 
   const panelLabels = {
@@ -134,12 +192,18 @@ const JacketCustomiser = () => {
     "arms-bottom": "both lower arms",
     "body-top": "both top body panels",
     "body-bottom": "both lower body panels",
+    "arm-top-left": "left top arm",
+    "arm-top-right": "right top arm",
+    "arm-bottom-left": "left lower arm",
+    "arm-bottom-right": "right lower arm",
+    "arm-middle-left": "left middle arm",
+    "arm-middle-right": "right middle arm",
   };
 
   return (
     <Wrapper>
       <Header>
-        <Brand>wearcarbs</Brand>
+        <Brand>custom carbs</Brand>
         <Title>customise</Title>
         <Subtitle>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit...
@@ -151,14 +215,14 @@ const JacketCustomiser = () => {
       <CustomiserLayout>
         <OptionsPanel>
           <OptionTitle>advanced options</OptionTitle>
-          <label>
+          <MirrorOption>
             <input
               type="checkbox"
               checked={mirrorSides}
               onChange={(e) => setMirrorSides(e.target.checked)}
             />
             mirror sides
-          </label>
+          </MirrorOption>
 
           <ArmsTab>
             <ArmOption
@@ -171,7 +235,7 @@ const JacketCustomiser = () => {
                 <br />
                 choose two furs
               </p>
-              <SelectedLabel>selected</SelectedLabel>
+              {panelType === "2" && <SelectedLabel>selected</SelectedLabel>}
             </ArmOption>
             <ArmOption
               selected={panelType === "3"}
@@ -183,7 +247,7 @@ const JacketCustomiser = () => {
                 <br />
                 choose three furs
               </p>
-              <PriceLabel>+ £10</PriceLabel>
+              {panelType === "3" && <SelectedLabel>selected</SelectedLabel>}
             </ArmOption>
           </ArmsTab>
         </OptionsPanel>
@@ -193,6 +257,7 @@ const JacketCustomiser = () => {
             onPanelClick={handlePanelClick}
             panelFills={panelFills}
             selectedPanel={selectedPanel}
+            panelType={panelType}
           />
         </JacketDisplay>
 
