@@ -43,12 +43,19 @@ const JacketSVG = ({ onPanelClick, panelFills, selectedPanel = null }) => {
       </defs>
 
       {panelIds.map((panelId) => {
-        const isSelected = selectedPanel === panelId;
-        const fill = isSelected
-          ? "var(--purple)"
-          : panelFills[panelId]
-          ? `url(#pattern-${panelId})`
-          : "#ccc";
+        const isSelected =
+          selectedPanel === panelId ||
+          (selectedPanel === "arms" &&
+            (panelId === "left-arm" || panelId === "right-arm")) ||
+          (selectedPanel === "sides" &&
+            (panelId === "body-left" || panelId === "body-right"));
+        const hasImg = !!panelFills[panelId];
+        const fill =
+          isSelected && !hasImg
+            ? "var(--purple)"
+            : hasImg
+            ? `url(#pattern-${panelId})`
+            : "#ccc";
 
         const sharedProps = {
           style: { fill },

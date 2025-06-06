@@ -8,7 +8,6 @@ import fabricOptions from "../functions/swatches.js";
 import JacketSVG from "../functions/jacket.js";
 
 import {
-  SVGWrapper,
   Wrapper,
   Header,
   Brand,
@@ -58,19 +57,51 @@ const JacketCustomiser = () => {
   const [panelType, setPanelType] = useState("2");
   const [selectedPanel, setSelectedPanel] = useState(null);
   const [panelFills, setPanelFills] = useState({});
+  const [mirrorSides, setMirrorSides] = useState(false);
 
   const handlePanelClick = (panel) => {
-    setSelectedPanel(panel);
+    if (!mirrorSides) {
+      setSelectedPanel(panel);
+    } else {
+      if (panel === "left-arm" || panel === "right-arm") {
+        setSelectedPanel("arms");
+      } else if (panel === "body-left" || panel === "body-right") {
+        setSelectedPanel("sides");
+      } else {
+        setSelectedPanel(panel);
+      }
+    }
   };
 
   const handleSwatchClick = (imgUrl) => {
-    if (selectedPanel) {
-      setPanelFills((prev) => ({
-        ...prev,
-        [selectedPanel]: imgUrl,
-      }));
-      setSelectedPanel(null);
-    }
+    if (!selectedPanel) return;
+
+    setPanelFills((prev) => {
+      const updated = { ...prev };
+
+      if (selectedPanel === "arms") {
+        updated["left-arm"] = imgUrl;
+        updated["right-arm"] = imgUrl;
+      } else if (selectedPanel === "sides") {
+        updated["body-left"] = imgUrl;
+        updated["body-right"] = imgUrl;
+      } else {
+        updated[selectedPanel] = imgUrl;
+      }
+
+      return updated;
+    });
+  };
+
+  const panelLabels = {
+    collar: "collar",
+    "left-arm": "left arm",
+    "right-arm": "right arm",
+    "body-left": "left front",
+    "body-right": "right front",
+    waistband: "waistband",
+    arms: "both arms",
+    sides: "both fronts",
   };
 
   return (
@@ -88,6 +119,15 @@ const JacketCustomiser = () => {
       <CustomiserLayout>
         <OptionsPanel>
           <OptionTitle>advanced options</OptionTitle>
+          <label>
+            <input
+              type="checkbox"
+              checked={mirrorSides}
+              onChange={(e) => setMirrorSides(e.target.checked)}
+            />
+            mirror sides
+          </label>
+
           <ArmsTab>
             <ArmOption
               selected={panelType === "2"}
@@ -125,7 +165,9 @@ const JacketCustomiser = () => {
         </JacketDisplay>
 
         <FabricPicker>
-          <CategoryTitle>top arm</CategoryTitle>
+          <CategoryTitle>
+            {selectedPanel ? panelLabels[selectedPanel] : "swatches"}
+          </CategoryTitle>
           <Swatches>
             {fabricOptions.map((img, i) => (
               <Swatch
