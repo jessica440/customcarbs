@@ -63,12 +63,25 @@ const JacketCustomiser = () => {
     if (!mirrorSides) {
       setSelectedPanel(panel);
     } else {
-      if (panel === "left-arm" || panel === "right-arm") {
-        setSelectedPanel("arms");
-      } else if (panel === "body-left" || panel === "body-right") {
-        setSelectedPanel("sides");
-      } else {
-        setSelectedPanel(panel);
+      switch (panel) {
+        case "upper-left-arm":
+        case "upper-right-arm":
+          setSelectedPanel("arms-top");
+          break;
+        case "lower-left-arm":
+        case "lower-right-arm":
+          setSelectedPanel("arms-bottom");
+          break;
+        case "body-left-top":
+        case "body-right-top":
+          setSelectedPanel("body-top");
+          break;
+        case "body-left-lower":
+        case "body-right-lower":
+          setSelectedPanel("body-bottom");
+          break;
+        default:
+          setSelectedPanel(panel);
       }
     }
   };
@@ -79,14 +92,25 @@ const JacketCustomiser = () => {
     setPanelFills((prev) => {
       const updated = { ...prev };
 
-      if (selectedPanel === "arms") {
-        updated["left-arm"] = imgUrl;
-        updated["right-arm"] = imgUrl;
-      } else if (selectedPanel === "sides") {
-        updated["body-left"] = imgUrl;
-        updated["body-right"] = imgUrl;
-      } else {
-        updated[selectedPanel] = imgUrl;
+      switch (selectedPanel) {
+        case "arms-top":
+          updated["upper-left-arm"] = imgUrl;
+          updated["upper-right-arm"] = imgUrl;
+          break;
+        case "arms-bottom":
+          updated["lower-left-arm"] = imgUrl;
+          updated["lower-right-arm"] = imgUrl;
+          break;
+        case "body-top":
+          updated["body-left-top"] = imgUrl;
+          updated["body-right-top"] = imgUrl;
+          break;
+        case "body-bottom":
+          updated["body-left-lower"] = imgUrl;
+          updated["body-right-lower"] = imgUrl;
+          break;
+        default:
+          updated[selectedPanel] = imgUrl;
       }
 
       return updated;
@@ -94,14 +118,22 @@ const JacketCustomiser = () => {
   };
 
   const panelLabels = {
-    collar: "collar",
-    "left-arm": "left arm",
-    "right-arm": "right arm",
-    "body-left": "left front",
-    "body-right": "right front",
     waistband: "waistband",
-    arms: "both arms",
-    sides: "both fronts",
+    "wristband-left": "left wristband",
+    "wristband-right": "right wristband",
+    "body-left-lower": "lower left body",
+    "body-right-lower": "lower right body",
+    "body-left-top": "upper left body",
+    "body-right-top": "upper right body",
+    "lower-left-arm": "lower left arm",
+    "lower-right-arm": "lower right arm",
+    "upper-left-arm": "upper left arm",
+    "upper-right-arm": "upper right arm",
+    collar: "collar",
+    "arms-top": "both top arms",
+    "arms-bottom": "both lower arms",
+    "body-top": "both top body panels",
+    "body-bottom": "both lower body panels",
   };
 
   return (
