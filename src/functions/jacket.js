@@ -138,8 +138,8 @@ const JacketSVG = ({ onPanelClick, panelFills, selectedPanel, panelType }) => {
                   href={image}
                   x="0"
                   y="0"
-                  width="100%"
-                  height="100%"
+                  width="40%"
+                  height="40%"
                   preserveAspectRatio="xMidYMid slice"
                 />
               )}

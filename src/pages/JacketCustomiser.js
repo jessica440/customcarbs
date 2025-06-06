@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
+import LegendPanel from "../components/LegendPanel";
 import Pointer from "../images/pointer2.svg";
 import ProceedButton from "../components/ProceedButton";
 import fabricOptions from "../functions/swatches.js";
@@ -58,7 +58,7 @@ const JacketCustomiser = () => {
   const [panelType, setPanelType] = useState("2");
   const [selectedPanel, setSelectedPanel] = useState(null);
   const [panelFills, setPanelFills] = useState({});
-  const [mirrorSides, setMirrorSides] = useState(false);
+  const [mirrorSides, setMirrorSides] = useState(true);
 
   const handlePanelClick = (panel) => {
     if (!mirrorSides) {
@@ -172,7 +172,7 @@ const JacketCustomiser = () => {
       return updated;
     });
 
-    setSelectedPanel(null); // Optional: keep selected if you want to pick multiple
+    // setSelectedPanel(null);
   };
 
   const panelLabels = {
@@ -279,15 +279,9 @@ const JacketCustomiser = () => {
       </CustomiserLayout>
 
       <Summary>
-        <Legend>
-          <LegendItem colour="#d3d3d3">top front</LegendItem>
-          <LegendItem colour="#f0f">top arm</LegendItem>
-          <LegendItem colour="#fc0">lower front</LegendItem>
-          <LegendItem colour="#ccc">under arm</LegendItem>
-          <LegendItem colour="#0f0">collar</LegendItem>
-        </Legend>
         <Price>£250</Price>
         <ProceedButton>pick me!</ProceedButton>
+        <LegendPanel panelFills={panelFills} />
       </Summary>
     </Wrapper>
   );
