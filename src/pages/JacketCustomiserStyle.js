@@ -59,11 +59,16 @@ export const ArmsTab = styled.div`
 `;
 
 export const ArmOption = styled.div`
-  background: ${({ selected }) => (selected ? "#fff" : "#ccc")};
+  background: ${(props) => (props.selected ? "white" : "#e0e0e0")};
   border: 1px solid #999;
   padding: 1rem;
   cursor: url(${Pointer}) 0 0, pointer;
   margin-bottom: 1rem;
+  transition: background 0.3s;
+
+  &:hover {
+    background: ${(props) => (props.selected ? "white" : "#d0d0d0")};
+  }
 `;
 
 export const ArmImage = styled.img`
