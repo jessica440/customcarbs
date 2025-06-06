@@ -58,6 +58,24 @@ export const ArmsTab = styled.div`
   margin-top: 1rem;
 `;
 
+export const MirrorOption = styled.label`
+  display: block;
+  background: var(--green);
+  padding: 0.5rem;
+  font-weight: bold;
+  font-size: 1rem;
+  /* border: 2px solid var(--purple); */
+  border-radius: 6px;
+  margin: 1rem 0;
+
+  cursor: url(${Pointer}) 0 0, pointer;
+
+  input {
+    margin-right: 0.5rem;
+    transform: scale(1.2);
+  }
+`;
+
 export const ArmOption = styled.div`
   background: ${(props) => (props.selected ? "white" : "#e0e0e0")};
   border: 1px solid #999;

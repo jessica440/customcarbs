@@ -31,6 +31,7 @@ import {
   Price,
   SelectedLabel,
   PriceLabel,
+  MirrorOption,
 } from "./JacketCustomiserStyle";
 
 const BackButton = styled.button`
@@ -214,14 +215,14 @@ const JacketCustomiser = () => {
       <CustomiserLayout>
         <OptionsPanel>
           <OptionTitle>advanced options</OptionTitle>
-          <label>
+          <MirrorOption>
             <input
               type="checkbox"
               checked={mirrorSides}
               onChange={(e) => setMirrorSides(e.target.checked)}
             />
             mirror sides
-          </label>
+          </MirrorOption>
 
           <ArmsTab>
             <ArmOption
