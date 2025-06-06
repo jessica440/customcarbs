@@ -8,7 +8,6 @@ import fabricOptions from "../functions/swatches.js";
 import JacketSVG from "../functions/jacket.js";
 
 import {
-  SVGWrapper,
   Wrapper,
   Header,
   Brand,
@@ -58,19 +57,83 @@ const JacketCustomiser = () => {
   const [panelType, setPanelType] = useState("2");
   const [selectedPanel, setSelectedPanel] = useState(null);
   const [panelFills, setPanelFills] = useState({});
+  const [mirrorSides, setMirrorSides] = useState(false);
 
   const handlePanelClick = (panel) => {
-    setSelectedPanel(panel);
+    if (!mirrorSides) {
+      setSelectedPanel(panel);
+    } else {
+      switch (panel) {
+        case "upper-left-arm":
+        case "upper-right-arm":
+          setSelectedPanel("arms-top");
+          break;
+        case "lower-left-arm":
+        case "lower-right-arm":
+          setSelectedPanel("arms-bottom");
+          break;
+        case "body-left-top":
+        case "body-right-top":
+          setSelectedPanel("body-top");
+          break;
+        case "body-left-lower":
+        case "body-right-lower":
+          setSelectedPanel("body-bottom");
+          break;
+        default:
+          setSelectedPanel(panel);
+      }
+    }
   };
 
   const handleSwatchClick = (imgUrl) => {
-    if (selectedPanel) {
-      setPanelFills((prev) => ({
-        ...prev,
-        [selectedPanel]: imgUrl,
-      }));
-      setSelectedPanel(null);
-    }
+    if (!selectedPanel) return;
+
+    setPanelFills((prev) => {
+      const updated = { ...prev };
+
+      switch (selectedPanel) {
+        case "arms-top":
+          updated["upper-left-arm"] = imgUrl;
+          updated["upper-right-arm"] = imgUrl;
+          break;
+        case "arms-bottom":
+          updated["lower-left-arm"] = imgUrl;
+          updated["lower-right-arm"] = imgUrl;
+          break;
+        case "body-top":
+          updated["body-left-top"] = imgUrl;
+          updated["body-right-top"] = imgUrl;
+          break;
+        case "body-bottom":
+          updated["body-left-lower"] = imgUrl;
+          updated["body-right-lower"] = imgUrl;
+          break;
+        default:
+          updated[selectedPanel] = imgUrl;
+      }
+
+      return updated;
+    });
+  };
+
+  const panelLabels = {
+    waistband: "waistband",
+    "wristband-left": "left wristband",
+    "wristband-right": "right wristband",
+    "body-left-lower": "lower left body",
+    "body-right-lower": "lower right body",
+    "body-left-top": "upper left body",
+    "body-right-top": "upper right body",
+    "lower-left-arm": "lower left arm",
+    "lower-right-arm": "lower right arm",
+    "upper-left-arm": "upper left arm",
+    "upper-right-arm": "upper right arm",
+    collar: "collar",
+    "arms-top": "both top arms",
+    "arms-bottom": "both lower arms",
+    "body-top": "both top body panels",
+    "body-bottom": "both lower body panels",
   };
 
   return (
@@ -88,6 +151,15 @@ const JacketCustomiser = () => {
       <CustomiserLayout>
         <OptionsPanel>
           <OptionTitle>advanced options</OptionTitle>
+          <label>
+            <input
+              type="checkbox"
+              checked={mirrorSides}
+              onChange={(e) => setMirrorSides(e.target.checked)}
+            />
+            mirror sides
+          </label>
+
           <ArmsTab>
             <ArmOption
               selected={panelType === "2"}
@@ -125,7 +197,9 @@ const JacketCustomiser = () => {
         </JacketDisplay>
 
         <FabricPicker>
-          <CategoryTitle>top arm</CategoryTitle>
+          <CategoryTitle>
+            {selectedPanel ? panelLabels[selectedPanel] : "swatches"}
+          </CategoryTitle>
           <Swatches>
             {fabricOptions.map((img, i) => (
               <Swatch
