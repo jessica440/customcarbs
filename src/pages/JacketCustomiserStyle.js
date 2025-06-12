@@ -7,6 +7,13 @@ export const SVGWrapper = styled.div`
   }
 `;
 
+export const PriceSummary = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+`;
+
 export const Wrapper = styled.div`
   padding: 2rem;
   font-family: "Arial", sans-serif;
@@ -66,8 +73,10 @@ export const MirrorOption = styled.label`
   font-size: 1rem;
   /* border: 2px solid var(--purple); */
   border-radius: 6px;
+  padding: 0.5rem 1rem;
   margin: 1rem 0;
-
+  font-weight: bold;
+  font-size: 0.95rem;
   cursor: url(${Pointer}) 0 0, pointer;
 
   input {
@@ -90,7 +99,7 @@ export const ArmOption = styled.div`
 `;
 
 export const ArmImage = styled.img`
-  width: 100%;
+  width: 50px;
 `;
 
 export const SelectedLabel = styled.span`

@@ -6,19 +6,21 @@ import Pointer from "../images/pointer2.svg";
 import ProceedButton from "../components/ProceedButton";
 import fabricOptions from "../functions/swatches.js";
 import JacketSVG from "../functions/jacket.js";
+import AdvancedOptionsPanel from "../components/AdvancedOptionsPanel.js";
 
 import {
   Wrapper,
+  PriceSummary,
   Header,
   Brand,
   Title,
   Subtitle,
   CustomiserLayout,
-  OptionsPanel,
-  OptionTitle,
-  ArmsTab,
-  ArmOption,
-  ArmImage,
+  // OptionsPanel,
+  // OptionTitle,
+  // ArmsTab,
+  // ArmOption,
+  // ArmImage,
   JacketDisplay,
   CategoryTitle,
   FabricPicker,
@@ -26,11 +28,8 @@ import {
   Swatch,
   ExtrasLabel,
   Summary,
-  Legend,
-  LegendItem,
-  Price,
   SelectedLabel,
-  PriceLabel,
+  Price,
   MirrorOption,
 } from "./JacketCustomiserStyle";
 
@@ -53,151 +52,162 @@ const BackButton = styled.button`
   }
 `;
 
+const mirrorMap = {
+  "body-left-upper": "body-right-upper",
+  "body-right-upper": "body-left-upper",
+  "body-left-middle": "body-right-middle",
+  "body-right-middle": "body-left-middle",
+  "body-left-bottom": "body-right-bottom",
+  "body-right-bottom": "body-left-bottom",
+  "body-left-top": "body-right-top",
+  "body-right-top": "body-left-top",
+  "body-left-lower": "body-right-lower",
+  "body-right-lower": "body-left-lower",
+  "upper-left-arm": "upper-right-arm",
+  "upper-right-arm": "upper-left-arm",
+  "lower-left-arm": "lower-right-arm",
+  "lower-right-arm": "lower-left-arm",
+  "arm-top-left": "arm-top-right",
+  "arm-top-right": "arm-top-left",
+  "arm-middle-left": "arm-middle-right",
+  "arm-middle-right": "arm-middle-left",
+  "arm-bottom-left": "arm-bottom-right",
+  "arm-bottom-right": "arm-bottom-left",
+  "wristband-left": "wristband-right",
+  "wristband-right": "wristband-left",
+};
+
 const JacketCustomiser = () => {
   const navigate = useNavigate();
   const [panelType, setPanelType] = useState("2");
+  const [bodyPanelType, setBodyPanelType] = useState("2-panel");
   const [selectedPanel, setSelectedPanel] = useState(null);
   const [panelFills, setPanelFills] = useState({});
   const [mirrorSides, setMirrorSides] = useState(true);
+  const [activeTab, setActiveTab] = useState("arms");
+  const [extras, setExtras] = useState({});
 
   const handlePanelClick = (panel) => {
-    if (!mirrorSides) {
-      setSelectedPanel(panel);
-      return;
-    }
+    if (!mirrorSides) return setSelectedPanel(panel);
 
-    // --- 3-panel arm mirroring ---
-    if (panelType === "3") {
-      if (["arm-top-left", "arm-top-right"].includes(panel)) {
-        setSelectedPanel("arms-top");
+    const mirroredGroups = {
+      "arms-top": [
+        "upper-left-arm",
+        "upper-right-arm",
+        "arm-top-left",
+        "arm-top-right",
+      ],
+      "arms-middle": ["arm-middle-left", "arm-middle-right"],
+      "arms-bottom": [
+        "lower-left-arm",
+        "lower-right-arm",
+        "arm-bottom-left",
+        "arm-bottom-right",
+      ],
+      "body-top": [
+        "body-left-top",
+        "body-right-top",
+        "body-left-upper",
+        "body-right-upper",
+      ],
+      "body-middle": ["body-left-middle", "body-right-middle"],
+      "body-bottom": [
+        "body-left-lower",
+        "body-right-lower",
+        "body-left-bottom",
+        "body-right-bottom",
+      ],
+      wristbands: ["wristband-left", "wristband-right"],
+    };
+
+    for (const [group, panels] of Object.entries(mirroredGroups)) {
+      if (panels.includes(panel)) {
+        setSelectedPanel(group);
         return;
       }
-      if (["arm-middle-left", "arm-middle-right"].includes(panel)) {
-        setSelectedPanel("arms-middle");
-        return;
-      }
-      if (["arm-bottom-left", "arm-bottom-right"].includes(panel)) {
-        setSelectedPanel("arms-bottom");
-        return;
-      }
     }
 
-    // --- 2-panel arm mirroring ---
-    else {
-      if (["upper-left-arm", "upper-right-arm"].includes(panel)) {
-        setSelectedPanel("arms-top");
-        return;
-      }
-      if (["lower-left-arm", "lower-right-arm"].includes(panel)) {
-        setSelectedPanel("arms-bottom");
-        return;
-      }
-    }
-
-    // --- Body mirroring (works in both modes) ---
-    if (["body-left-top", "body-right-top"].includes(panel)) {
-      setSelectedPanel("body-top");
-      return;
-    }
-    if (["body-left-lower", "body-right-lower"].includes(panel)) {
-      setSelectedPanel("body-bottom");
-      return;
-    }
-
-    // --- Wristbands or others ---
-    if (["wristband-left", "wristband-right"].includes(panel)) {
-      setSelectedPanel("wristbands");
-      return;
-    }
-
-    // Default single panel
     setSelectedPanel(panel);
   };
+
   const handleSwatchClick = (imgUrl) => {
     if (!selectedPanel) return;
 
     setPanelFills((prev) => {
       const updated = { ...prev };
 
-      switch (selectedPanel) {
-        // Arm mirroring
-        case "arms-top":
-          if (panelType === "3") {
-            updated["arm-top-left"] = imgUrl;
-            updated["arm-top-right"] = imgUrl;
-          } else {
-            updated["upper-left-arm"] = imgUrl;
-            updated["upper-right-arm"] = imgUrl;
-          }
-          break;
+      const apply = (id) => {
+        updated[id] = imgUrl;
+        if (mirrorSides && mirrorMap[id]) updated[mirrorMap[id]] = imgUrl;
+      };
 
-        case "arms-middle":
-          updated["arm-middle-left"] = imgUrl;
-          updated["arm-middle-right"] = imgUrl;
-          break;
+      const groups = {
+        "arms-top":
+          panelType === "3"
+            ? ["arm-top-left", "arm-top-right"]
+            : ["upper-left-arm", "upper-right-arm"],
+        "arms-middle": ["arm-middle-left", "arm-middle-right"],
+        "arms-bottom":
+          panelType === "3"
+            ? ["arm-bottom-left", "arm-bottom-right"]
+            : ["lower-left-arm", "lower-right-arm"],
+        "body-top":
+          bodyPanelType === "3-panel"
+            ? ["body-left-upper", "body-right-upper"]
+            : ["body-left-top", "body-right-top"],
+        "body-middle": ["body-left-middle", "body-right-middle"],
+        "body-bottom":
+          bodyPanelType === "3-panel"
+            ? ["body-left-bottom", "body-right-bottom"]
+            : ["body-left-lower", "body-right-lower"],
+        wristbands: ["wristband-left", "wristband-right"],
+      };
 
-        case "arms-bottom":
-          if (panelType === "3") {
-            updated["arm-bottom-left"] = imgUrl;
-            updated["arm-bottom-right"] = imgUrl;
-          } else {
-            updated["lower-left-arm"] = imgUrl;
-            updated["lower-right-arm"] = imgUrl;
-          }
-          break;
-
-        // Body mirroring
-        case "body-top":
-          updated["body-left-top"] = imgUrl;
-          updated["body-right-top"] = imgUrl;
-          break;
-
-        case "body-bottom":
-          updated["body-left-lower"] = imgUrl;
-          updated["body-right-lower"] = imgUrl;
-          break;
-
-        // Optional: wristband mirroring
-        case "wristbands":
-          updated["wristband-left"] = imgUrl;
-          updated["wristband-right"] = imgUrl;
-          break;
-
-        // Default — single panel
-        default:
-          updated[selectedPanel] = imgUrl;
-          break;
+      if (groups[selectedPanel]) {
+        groups[selectedPanel].forEach(apply);
+      } else {
+        apply(selectedPanel);
       }
 
       return updated;
     });
-
-    // setSelectedPanel(null);
   };
 
   const panelLabels = {
-    waistband: "waistband",
-    "wristband-left": "left wristband",
-    "wristband-right": "right wristband",
-    "body-left-lower": "lower left body",
-    "body-right-lower": "lower right body",
-    "body-left-top": "upper left body",
-    "body-right-top": "upper right body",
-    "lower-left-arm": "lower left arm",
-    "lower-right-arm": "lower right arm",
-    "upper-left-arm": "upper left arm",
-    "upper-right-arm": "upper right arm",
-    collar: "collar",
-    "arms-top": "both top arms",
-    "arms-bottom": "both lower arms",
-    "body-top": "both top body panels",
-    "body-bottom": "both lower body panels",
-    "arm-top-left": "left top arm",
-    "arm-top-right": "right top arm",
-    "arm-bottom-left": "left lower arm",
-    "arm-bottom-right": "right lower arm",
-    "arm-middle-left": "left middle arm",
-    "arm-middle-right": "right middle arm",
+    collar: "Collar",
+    waistband: "Waistband",
+    "wristband-left": "Left Wristband",
+    "wristband-right": "Right Wristband",
+    "body-left-top": "Left Body (Top)",
+    "body-right-top": "Right Body (Top)",
+    "body-left-lower": "Left Body (Lower)",
+    "body-right-lower": "Right Body (Lower)",
+    "body-left-upper": "Left Body (Upper)",
+    "body-right-upper": "Right Body (Upper)",
+    "body-left-middle": "Left Body (Middle)",
+    "body-right-middle": "Right Body (Middle)",
+    "body-left-bottom": "Left Body (Bottom)",
+    "body-right-bottom": "Right Body (Bottom)",
+    "upper-left-arm": "Left Arm (Upper)",
+    "upper-right-arm": "Right Arm (Upper)",
+    "lower-left-arm": "Left Arm (Lower)",
+    "lower-right-arm": "Right Arm (Lower)",
+    "arm-top-left": "Left Arm (Top)",
+    "arm-top-right": "Right Arm (Top)",
+    "arm-middle-left": "Left Arm (Middle)",
+    "arm-middle-right": "Right Arm (Middle)",
+    "arm-bottom-left": "Left Arm (Bottom)",
+    "arm-bottom-right": "Right Arm (Bottom)",
+  };
+
+  const groupLabels = {
+    "arms-top": "Arms (Top)",
+    "arms-middle": "Arms (Middle)",
+    "arms-bottom": "Arms (Bottom)",
+    "body-top": "Body (Top)",
+    "body-middle": "Body (Middle)",
+    "body-bottom": "Body (Bottom)",
+    wristbands: "Wristbands",
   };
 
   return (
@@ -206,14 +216,16 @@ const JacketCustomiser = () => {
         <Brand>custom carbs</Brand>
         <Title>customise</Title>
         <Subtitle>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+          click on a panel then select a swatch, choose how many arm or body
+          panels you'd like and select if you want to mirror the sides of your
+          design
         </Subtitle>
       </Header>
 
       <BackButton onClick={() => navigate(-1)}>Back</BackButton>
 
       <CustomiserLayout>
-        <OptionsPanel>
+        {/* <OptionsPanel>
           <OptionTitle>advanced options</OptionTitle>
           <MirrorOption>
             <input
@@ -229,7 +241,7 @@ const JacketCustomiser = () => {
               selected={panelType === "2"}
               onClick={() => setPanelType("2")}
             >
-              <ArmImage src="/images/2panel.svg" alt="2 Panel" />
+              <ArmImage src="../images/3-panel-arm.svg" alt="2 Panel" />
               <p>
                 <strong>2 panel</strong>
                 <br />
@@ -241,7 +253,7 @@ const JacketCustomiser = () => {
               selected={panelType === "3"}
               onClick={() => setPanelType("3")}
             >
-              <ArmImage src="/images/3panel.svg" alt="3 Panel" />
+              <ArmImage src="../images/3-panel-arm.svg" alt="3 Panel" />
               <p>
                 <strong>3 panel</strong>
                 <br />
@@ -249,21 +261,47 @@ const JacketCustomiser = () => {
               </p>
               {panelType === "3" && <SelectedLabel>selected</SelectedLabel>}
             </ArmOption>
+            <ArmOption
+              selected={bodyPanelType === "2-panel"}
+              onClick={() => setBodyPanelType("2-panel")}
+            >
+              2 panel body
+            </ArmOption>
+            <ArmOption
+              selected={bodyPanelType === "3-panel"}
+              onClick={() => setBodyPanelType("3-panel")}
+            >
+              3 panel body
+            </ArmOption>
           </ArmsTab>
-        </OptionsPanel>
-
+        </OptionsPanel> */}
+        <AdvancedOptionsPanel
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          panelType={panelType}
+          setPanelType={setPanelType}
+          bodyPanelType={bodyPanelType}
+          setBodyPanelType={setBodyPanelType}
+          mirrorSides={mirrorSides}
+          setMirrorSides={setMirrorSides}
+          extras={extras}
+          setExtras={setExtras}
+        />
         <JacketDisplay>
           <JacketSVG
             onPanelClick={handlePanelClick}
             panelFills={panelFills}
             selectedPanel={selectedPanel}
             panelType={panelType}
+            bodyPanelType={bodyPanelType}
           />
         </JacketDisplay>
 
         <FabricPicker>
           <CategoryTitle>
-            {selectedPanel ? panelLabels[selectedPanel] : "swatches"}
+            {panelLabels[selectedPanel] ||
+              groupLabels[selectedPanel] ||
+              "swatches"}
           </CategoryTitle>
           <Swatches>
             {fabricOptions.map((img, i) => (
@@ -279,8 +317,10 @@ const JacketCustomiser = () => {
       </CustomiserLayout>
 
       <Summary>
-        <Price>£250</Price>
-        <ProceedButton>pick me!</ProceedButton>
+        <PriceSummary>
+          <Price>£250</Price>
+          <ProceedButton>pick me!</ProceedButton>
+        </PriceSummary>
         <LegendPanel panelFills={panelFills} />
       </Summary>
     </Wrapper>
