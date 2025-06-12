@@ -294,6 +294,7 @@ const JacketCustomiser = () => {
             selectedPanel={selectedPanel}
             panelType={panelType}
             bodyPanelType={bodyPanelType}
+            mirrorSides={mirrorSides}
           />
         </JacketDisplay>
 
