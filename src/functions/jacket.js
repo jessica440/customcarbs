@@ -7,16 +7,28 @@ const panelIds = [
   "waistband",
   "wristband-left",
   "wristband-right",
-  "body-left-lower",
-  "body-right-lower",
+  "collar",
+
+  // 2-panel body
   "body-left-top",
   "body-right-top",
-  "collar",
+  "body-left-lower",
+  "body-right-lower",
+
+  // 3-panel body
+  "body-left-upper",
+  "body-right-upper",
+  "body-left-middle",
+  "body-right-middle",
+  "body-left-bottom",
+  "body-right-bottom",
+
   // 2-panel arms
   "upper-left-arm",
   "upper-right-arm",
   "lower-left-arm",
   "lower-right-arm",
+
   // 3-panel arms
   "arm-top-left",
   "arm-top-right",
@@ -26,7 +38,13 @@ const panelIds = [
   "arm-bottom-right",
 ];
 
-const JacketSVG = ({ onPanelClick, panelFills, selectedPanel, panelType }) => {
+const JacketSVG = ({
+  onPanelClick,
+  panelFills,
+  selectedPanel,
+  panelType,
+  bodyPanelType,
+}) => {
   const isSelected = (panelId) => {
     if (selectedPanel === panelId) return true;
 
@@ -34,6 +52,7 @@ const JacketSVG = ({ onPanelClick, panelFills, selectedPanel, panelType }) => {
       return ["wristband-left", "wristband-right"].includes(panelId);
     }
 
+    // Arms
     if (panelType === "3") {
       if (
         selectedPanel === "arms-top" &&
@@ -66,17 +85,55 @@ const JacketSVG = ({ onPanelClick, panelFills, selectedPanel, panelType }) => {
         return true;
     }
 
-    if (
-      selectedPanel === "body-top" &&
-      ["body-left-top", "body-right-top"].includes(panelId)
-    )
-      return true;
+    // Body (grouped selection)
+    if (bodyPanelType === "3-panel") {
+      if (
+        selectedPanel === "body-top" &&
+        ["body-left-upper", "body-right-upper"].includes(panelId)
+      )
+        return true;
+
+      if (
+        selectedPanel === "body-middle" &&
+        ["body-left-middle", "body-right-middle"].includes(panelId)
+      )
+        return true;
+
+      if (
+        selectedPanel === "body-bottom" &&
+        ["body-left-bottom", "body-right-bottom"].includes(panelId)
+      )
+        return true;
+    } else {
+      if (
+        selectedPanel === "body-top" &&
+        ["body-left-top", "body-right-top"].includes(panelId)
+      )
+        return true;
+
+      if (
+        selectedPanel === "body-bottom" &&
+        ["body-left-lower", "body-right-lower"].includes(panelId)
+      )
+        return true;
+    }
+
+    // mirror logic for 3-panel body
+    const mirroredPanelMap = {
+      "body-left-upper": "body-right-upper",
+      "body-right-upper": "body-left-upper",
+      "body-left-middle": "body-right-middle",
+      "body-right-middle": "body-left-middle",
+      "body-left-bottom": "body-right-bottom",
+      "body-right-bottom": "body-left-bottom",
+    };
 
     if (
-      selectedPanel === "body-bottom" &&
-      ["body-left-lower", "body-right-lower"].includes(panelId)
-    )
+      bodyPanelType === "3-panel" &&
+      mirroredPanelMap[selectedPanel] === panelId
+    ) {
       return true;
+    }
 
     return false;
   };
@@ -138,8 +195,8 @@ const JacketSVG = ({ onPanelClick, panelFills, selectedPanel, panelType }) => {
                   href={image}
                   x="0"
                   y="0"
-                  width="100%"
-                  height="100%"
+                  width="40%"
+                  height="40%"
                   preserveAspectRatio="xMidYMid slice"
                 />
               )}
@@ -169,66 +226,179 @@ const JacketSVG = ({ onPanelClick, panelFills, selectedPanel, panelType }) => {
         {renderSelectedText(231, 25, "collar")}
       </g>
 
-      <g
-        id="body-left-top"
-        onClick={() => onPanelClick("body-left-top")}
-        style={panelStyle}
-        onMouseEnter={() => setHoveredPanel("body-left-top")}
-        onMouseLeave={() => setHoveredPanel(null)}
-      >
-        <path
-          d="M231.86,55.17s-31.73,1.57-50.05-12.91c0,0-31.17,5.96-39.25,9.12v101.34h89.31V55.17Z"
-          fill={getFill("body-left-top")}
-          stroke="#221f20"
-        />
-        {renderSelectedText(180, 100, "body-left-top")}
-      </g>
+      {bodyPanelType === "2-panel" && (
+        <>
+          {/* Body Left Top */}
+          <g
+            id="body-left-top"
+            onClick={() => onPanelClick("body-left-top")}
+            style={panelStyle}
+            onMouseEnter={() => setHoveredPanel("body-left-top")}
+            onMouseLeave={() => setHoveredPanel(null)}
+          >
+            <path
+              d="M231.86,55.17s-31.73,1.57-50.05-12.91c0,0-31.17,5.96-39.25,9.12v101.34h89.31V55.17Z"
+              fill={getFill("body-left-top")}
+              stroke="#221f20"
+            />
+            {renderSelectedText(180, 100, "body-left-top")}
+          </g>
 
-      <g
-        id="body-right-top"
-        onClick={() => onPanelClick("body-right-top")}
-        style={panelStyle}
-        onMouseEnter={() => setHoveredPanel("body-right-top")}
-        onMouseLeave={() => setHoveredPanel(null)}
-      >
-        <path
-          d="M231.31,55.17s32.84,1.57,49.58-12.91c0,0,30.72,5.96,38.72,9.12l.15,101.34h-88.45V55.17Z"
-          fill={getFill("body-right-top")}
-          stroke="#221f20"
-        />
-        {renderSelectedText(285, 100, "body-right-top")}
-      </g>
+          {/* Body Right Top */}
+          <g
+            id="body-right-top"
+            onClick={() => onPanelClick("body-right-top")}
+            style={panelStyle}
+            onMouseEnter={() => setHoveredPanel("body-right-top")}
+            onMouseLeave={() => setHoveredPanel(null)}
+          >
+            <path
+              d="M231.31,55.17s32.84,1.57,49.58-12.91c0,0,30.72,5.96,38.72,9.12l.15,101.34h-88.45V55.17Z"
+              fill={getFill("body-right-top")}
+              stroke="#221f20"
+            />
+            {renderSelectedText(285, 100, "body-right-top")}
+          </g>
 
-      <g
-        id="body-left-lower"
-        onClick={() => onPanelClick("body-left-lower")}
-        style={panelStyle}
-        onMouseEnter={() => setHoveredPanel("body-left-lower")}
-        onMouseLeave={() => setHoveredPanel(null)}
-      >
-        <path
-          d="M231.55,152.72h-88.99s-.79,59.62,4.67,106.49h84.31v-106.49Z"
-          fill={getFill("body-left-lower")}
-          stroke="#221f20"
-        />
-        {renderSelectedText(180, 230, "body-left-lower")}
-      </g>
+          {/* Body Left Lower */}
+          <g
+            id="body-left-lower"
+            onClick={() => onPanelClick("body-left-lower")}
+            style={panelStyle}
+            onMouseEnter={() => setHoveredPanel("body-left-lower")}
+            onMouseLeave={() => setHoveredPanel(null)}
+          >
+            <path
+              d="M231.55,152.72h-88.99s-.79,59.62,4.67,106.49h84.31v-106.49Z"
+              fill={getFill("body-left-lower")}
+              stroke="#221f20"
+            />
+            {renderSelectedText(180, 230, "body-left-lower")}
+          </g>
 
-      <g
-        id="body-right-lower"
-        onClick={() => onPanelClick("body-right-lower")}
-        style={panelStyle}
-        onMouseEnter={() => setHoveredPanel("body-right-lower")}
-        onMouseLeave={() => setHoveredPanel(null)}
-      >
-        <path
-          d="M231.55,152.72h88.17s.79,59.62-4.63,106.49h-83.54v-106.49Z"
-          fill={getFill("body-right-lower")}
-          stroke="#221f20"
-        />
-        {renderSelectedText(285, 230, "body-right-lower")}
-      </g>
+          {/* Body Right Lower */}
+          <g
+            id="body-right-lower"
+            onClick={() => onPanelClick("body-right-lower")}
+            style={panelStyle}
+            onMouseEnter={() => setHoveredPanel("body-right-lower")}
+            onMouseLeave={() => setHoveredPanel(null)}
+          >
+            <path
+              d="M231.55,152.72h88.17s.79,59.62-4.63,106.49h-83.54v-106.49Z"
+              fill={getFill("body-right-lower")}
+              stroke="#221f20"
+            />
+            {renderSelectedText(285, 230, "body-right-lower")}
+          </g>
+        </>
+      )}
 
+      {bodyPanelType === "3-panel" && (
+        <>
+          {/* Body Left Upper */}
+          <g
+            id="body-left-upper"
+            onClick={() => onPanelClick("body-left-upper")}
+            style={panelStyle}
+            onMouseEnter={() => setHoveredPanel("body-left-upper")}
+            onMouseLeave={() => setHoveredPanel(null)}
+          >
+            <path
+              d="M231.26,55.17s-30.6,2.77-49.58-12.91c0,0-24.17,4.84-38.88,9.32l.68,83.95h87.78s0-80.36,0-80.36Z"
+              fill={getFill("body-left-upper")}
+              stroke="#231f20"
+              strokeMiterlimit="10"
+            />
+            {renderSelectedText(180, 100, "body-left-upper")}
+          </g>
+
+          {/* Body Right Upper */}
+          <g
+            id="body-right-upper"
+            onClick={() => onPanelClick("body-right-upper")}
+            style={panelStyle}
+            onMouseEnter={() => setHoveredPanel("body-right-upper")}
+            onMouseLeave={() => setHoveredPanel(null)}
+          >
+            <path
+              d="M231.31,55.17s30.6,2.77,49.58-12.91c0,0,24.17,4.84,38.88,9.32l-.68,83.95h-87.78V55.17Z"
+              fill={getFill("body-right-upper")}
+              stroke="#221f20"
+              strokeMiterlimit="10"
+            />
+            {renderSelectedText(285, 100, "body-right-upper")}
+          </g>
+
+          {/* Body Left Middle */}
+          <g
+            id="body-left-middle"
+            onClick={() => onPanelClick("body-left-middle")}
+            style={panelStyle}
+            onMouseEnter={() => setHoveredPanel("body-left-middle")}
+            onMouseLeave={() => setHoveredPanel(null)}
+          >
+            <path
+              d="M142.98,135.53s-.12,40.32.35,55.12h87.52s.6-55.12.6-55.12h-88.47Z"
+              fill={getFill("body-left-middle")}
+              stroke="#231f20"
+              strokeMiterlimit="10"
+            />
+            {renderSelectedText(180, 170, "body-left-middle")}
+          </g>
+
+          {/* Body Right Middle */}
+          <g
+            id="body-right-middle"
+            onClick={() => onPanelClick("body-right-middle")}
+            style={panelStyle}
+            onMouseEnter={() => setHoveredPanel("body-right-middle")}
+            onMouseLeave={() => setHoveredPanel(null)}
+          >
+            <path
+              d="M319.73,135.53s.12,40.32-.35,55.12h-87.52l-.6-55.12h88.47Z"
+              fill={getFill("body-right-middle")}
+              stroke="#231f20"
+              strokeMiterlimit="10"
+            />
+            {renderSelectedText(285, 170, "body-right-middle")}
+          </g>
+
+          {/* Body Left Bottom */}
+          <g
+            id="body-left-bottom"
+            onClick={() => onPanelClick("body-left-bottom")}
+            style={panelStyle}
+            onMouseEnter={() => setHoveredPanel("body-left-bottom")}
+            onMouseLeave={() => setHoveredPanel(null)}
+          >
+            <path
+              d="M231.17,190.65l-.1,68.55-82.33.1s-5.13-26.13-5.51-68.66h87.93Z"
+              fill={getFill("body-left-bottom")}
+              stroke="#231f20"
+              strokeMiterlimit="10"
+            />
+            {renderSelectedText(180, 240, "body-left-bottom")}
+          </g>
+
+          {/* Body Right Bottom */}
+          <g
+            id="body-right-bottom"
+            onClick={() => onPanelClick("body-right-bottom")}
+            style={panelStyle}
+            onMouseEnter={() => setHoveredPanel("body-right-bottom")}
+            onMouseLeave={() => setHoveredPanel(null)}
+          >
+            <path
+              d="M231.45,190.65l.1,68.55,82.33.1s5.13-26.13,5.51-68.66h-87.93Z"
+              fill={getFill("body-right-bottom")}
+              stroke="#231f20"
+              strokeMiterlimit="10"
+            />
+            {renderSelectedText(285, 240, "body-right-bottom")}
+          </g>
+        </>
+      )}
       <g
         id="waistband"
         onClick={() => onPanelClick("waistband")}

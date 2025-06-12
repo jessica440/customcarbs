@@ -4,7 +4,6 @@ import cow from "../images/furs/cow.png";
 import dalmatian from "../images/furs/dalmatian.png";
 import heart from "../images/furs/heart.png";
 import lava from "../images/furs/lava.png";
-import leo from "../images/furs/leo.png";
 import leopard from "../images/furs/leopard.png";
 import pinkCow from "../images/furs/pink-cow.png";
 import pinkPurple from "../images/furs/pink-purple.png";
@@ -25,7 +24,6 @@ const fabricOptions = [
   dalmatian,
   heart,
   lava,
-  leo,
   leopard,
   pinkCow,
   pinkPurple,

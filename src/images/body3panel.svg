@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 461.78 284.15">
+  <g id="waistband">
+    <rect x="148.25" y="259.31" width="165.63" height="24.35" fill="#fff" stroke="#221f20" stroke-miterlimit="10"/>
+  </g>
+  <g id="body-right-upper">
+    <path d="M231.31,55.17s30.6,2.77,49.58-12.91c0,0,24.17,4.84,38.88,9.32l-.68,83.95h-87.78V55.17Z" fill="none" stroke="#221f20" stroke-miterlimit="10"/>
+  </g>
+  <g id="body-left-upper">
+    <path d="M231.26,55.17s-30.6,2.77-49.58-12.91c0,0-24.17,4.84-38.88,9.32l.68,83.95h87.78s0-80.36,0-80.36Z" fill="#fff" stroke="#231f20" stroke-miterlimit="10"/>
+  </g>
+  <g id="body-right-middle">
+    <path d="M319.73,135.53s.12,40.32-.35,55.12h-87.52l-.6-55.12h88.47Z" fill="none" stroke="#231f20" stroke-miterlimit="10"/>
+  </g>
+  <g id="body-left-middle">
+    <path d="M142.98,135.53s-.12,40.32.35,55.12h87.52s.6-55.12.6-55.12h-88.47Z" fill="none" stroke="#231f20" stroke-miterlimit="10"/>
+  </g>
+  <g id="body-right-bottom">
+    <path d="M231.45,190.65l.1,68.55,82.33.1s5.13-26.13,5.51-68.66h-87.93Z" fill="none" stroke="#231f20" stroke-miterlimit="10"/>
+  </g>
+  <g id="body-left-bottom">
+    <path d="M231.17,190.65l-.1,68.55-82.33.1s-5.13-26.13-5.51-68.66h87.93Z" fill="none" stroke="#231f20" stroke-miterlimit="10"/>
+  </g>
+  <g id="collar">
+    <g>
+      <path d="M271.87.5h-39.57l-.21,54.16c39.72,0,48.94-13.17,48.94-13.17,0-24.8-9.16-41-9.16-41Z" fill="none" stroke="#221f20" stroke-miterlimit="10"/>
+      <path d="M182.78,41.5s8.94,13.17,49.31,13.17l.22-54.16h-40.22s-9.31,16.19-9.31,41Z" fill="none" stroke="#221f20" stroke-miterlimit="10"/>
+    </g>
+  </g>
+</svg>
