@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LegendPanel from "../components/LegendPanel";
 import Pointer from "../images/pointer2.svg";
-import ProceedButton from "../components/ProceedButton";
+import { PickMe } from "../components/PickMe";
 import fabricOptions from "../functions/swatches.js";
 import JacketSVG from "../functions/jacket.js";
 import AdvancedOptionsPanel from "../components/AdvancedOptionsPanel.js";
+import Modal from "../components/Modal.js";
 
 import {
   Wrapper,
@@ -80,12 +81,13 @@ const mirrorMap = {
 const JacketCustomiser = () => {
   const navigate = useNavigate();
   const [panelType, setPanelType] = useState("2");
-  const [bodyPanelType, setBodyPanelType] = useState("2-panel");
+  const [bodyPanelType, setBodyPanelType] = useState("2");
   const [selectedPanel, setSelectedPanel] = useState(null);
   const [panelFills, setPanelFills] = useState({});
   const [mirrorSides, setMirrorSides] = useState(true);
   const [activeTab, setActiveTab] = useState("arms");
   const [extras, setExtras] = useState({});
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const handlePanelClick = (panel) => {
     if (!mirrorSides) return setSelectedPanel(panel);
@@ -152,12 +154,12 @@ const JacketCustomiser = () => {
             ? ["arm-bottom-left", "arm-bottom-right"]
             : ["lower-left-arm", "lower-right-arm"],
         "body-top":
-          bodyPanelType === "3-panel"
+          bodyPanelType === "3"
             ? ["body-left-upper", "body-right-upper"]
             : ["body-left-top", "body-right-top"],
         "body-middle": ["body-left-middle", "body-right-middle"],
         "body-bottom":
-          bodyPanelType === "3-panel"
+          bodyPanelType === "3"
             ? ["body-left-bottom", "body-right-bottom"]
             : ["body-left-lower", "body-right-lower"],
         wristbands: ["wristband-left", "wristband-right"],
@@ -210,6 +212,50 @@ const JacketCustomiser = () => {
     wristbands: "Wristbands",
   };
 
+  const requiredPanels = [
+    ...(panelType === "3"
+      ? [
+          "arm-top-left",
+          "arm-middle-left",
+          "arm-bottom-left",
+          "arm-top-right",
+          "arm-middle-right",
+          "arm-bottom-right",
+        ]
+      : [
+          "upper-left-arm",
+          "lower-left-arm",
+          "upper-right-arm",
+          "lower-right-arm",
+        ]),
+    ...(bodyPanelType === "3"
+      ? [
+          "body-left-upper",
+          "body-left-middle",
+          "body-left-lower",
+          "body-right-upper",
+          "body-right-middle",
+          "body-right-lower",
+        ]
+      : [
+          "body-left-top",
+          "body-left-bottom",
+          "body-right-top",
+          "body-right-bottom",
+        ]),
+    "wristband-left",
+    "wristband-right",
+    "collar",
+    "waistband",
+  ].flat();
+
+  const allPanelsFilled = requiredPanels.every((id) => panelFills[id]);
+
+  const handlePickMe = () => {
+    if (!allPanelsFilled) return;
+    setModalOpen(true);
+  };
+
   return (
     <Wrapper>
       <Header>
@@ -225,56 +271,6 @@ const JacketCustomiser = () => {
       <BackButton onClick={() => navigate(-1)}>Back</BackButton>
 
       <CustomiserLayout>
-        {/* <OptionsPanel>
-          <OptionTitle>advanced options</OptionTitle>
-          <MirrorOption>
-            <input
-              type="checkbox"
-              checked={mirrorSides}
-              onChange={(e) => setMirrorSides(e.target.checked)}
-            />
-            mirror sides
-          </MirrorOption>
-
-          <ArmsTab>
-            <ArmOption
-              selected={panelType === "2"}
-              onClick={() => setPanelType("2")}
-            >
-              <ArmImage src="../images/3-panel-arm.svg" alt="2 Panel" />
-              <p>
-                <strong>2 panel</strong>
-                <br />
-                choose two furs
-              </p>
-              {panelType === "2" && <SelectedLabel>selected</SelectedLabel>}
-            </ArmOption>
-            <ArmOption
-              selected={panelType === "3"}
-              onClick={() => setPanelType("3")}
-            >
-              <ArmImage src="../images/3-panel-arm.svg" alt="3 Panel" />
-              <p>
-                <strong>3 panel</strong>
-                <br />
-                choose three furs
-              </p>
-              {panelType === "3" && <SelectedLabel>selected</SelectedLabel>}
-            </ArmOption>
-            <ArmOption
-              selected={bodyPanelType === "2-panel"}
-              onClick={() => setBodyPanelType("2-panel")}
-            >
-              2 panel body
-            </ArmOption>
-            <ArmOption
-              selected={bodyPanelType === "3-panel"}
-              onClick={() => setBodyPanelType("3-panel")}
-            >
-              3 panel body
-            </ArmOption>
-          </ArmsTab>
-        </OptionsPanel> */}
         <AdvancedOptionsPanel
           activeTab={activeTab}
           setActiveTab={setActiveTab}
@@ -320,9 +316,22 @@ const JacketCustomiser = () => {
       <Summary>
         <PriceSummary>
           <Price>£250</Price>
-          <ProceedButton>pick me!</ProceedButton>
+          <PickMe
+            // onClick={() => setModalOpen(true)}
+            onClick={handlePickMe}
+            disabled={!allPanelsFilled}
+          >
+            pick me!
+          </PickMe>
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setModalOpen(false)}
+            panelFills={panelFills}
+            panelType={panelType}
+            bodyPanelType={bodyPanelType}
+            mirrorSides={mirrorSides}
+          />
         </PriceSummary>
-        <LegendPanel panelFills={panelFills} />
       </Summary>
     </Wrapper>
   );

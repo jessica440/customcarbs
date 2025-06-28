@@ -1,67 +1,71 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import CustomJacketCard from "../components/CustomJacketCard";
 import SwatchSelector from "../components/SwatchSelector";
 import ProceedButton from "../components/ProceedButton";
-
-const PageContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 2rem;
-  justify-content: space-between;
-  background-color: var(--button-text);
-  color: var(--button);
-  font-family: "Poppins", sans-serif;
-  @media (max-width: 768px) {
-    flex-direction: column;
-    padding: 1rem;
-    align-items: center;
-  }
-`;
-
-const Content = styled.div`
-  max-width: 50%;
-`;
-
-const Heading = styled.h1`
-  font-size: 2rem;
-  margin-bottom: 1rem;
-`;
-
-const Paragraph = styled.p`
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--paragraph);
-`;
+import { steps } from "../functions/steps";
+import {
+  PageContainer,
+  Heading,
+  Paragraph,
+  CarouselContainer,
+  Arrow,
+  StepContent,
+  Content,
+  StepImg,
+  StepText,
+  ToastWrapper,
+} from "./CustomOrdersStyle";
 
 const CustomOrders = () => {
+  const handlePrev = () => {
+    setCurrentStep((prev) => (prev > 0 ? prev - 1 : steps.length - 1));
+  };
+  const handleNext = () => {
+    setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : 0));
+  };
+  const [currentStep, setCurrentStep] = useState(0);
+  const [pop, setPop] = useState(false);
+  const [textKey, setTextKey] = useState(0);
+
+  useEffect(() => {
+    setPop(true);
+    setTextKey((prev) => prev + 1);
+    const timeout = setTimeout(() => setPop(false), 300);
+    return () => clearTimeout(timeout);
+  }, [currentStep]);
+
+  useEffect(() => {
+    setPop(true);
+    const timeout = setTimeout(() => setPop(false), 300);
+    return () => clearTimeout(timeout);
+  }, [currentStep]);
+
   return (
     <PageContainer>
       <CustomJacketCard />
       <Content>
-        <Heading>custom orders</Heading>
+        <Heading>how it works</Heading>
         <Paragraph>
           Custom coats for bodies. All bodies. Just send your measurements and
           pick your favourite swatches!
-          <br />
-          <br />
-          <b>HOW IT WORKS:</b>
-          <br />
-          1. Choose your body and arm panel layouts (2-panel or 3-panel - your
-          call). <br />
-          2. Mix and match fabrics and colours - just click on the jacket panel
-          you’d like to change, then pick a swatch from the options on the
-          right. <br />
-          3. Add optional extras: pockets, hoods… <br />
-          4. See your design come to life, then place your order! <br />
-          Each jacket is made just for you, so please allow{" "}
-          <b>up to 21 working days</b> for production (shipping time not
-          included). Keep an eye on your inbox in case we need to chat about
-          stock or design tweaks. <br /> <br />
-          <b>Not sure where to start?</b> <br /> Check out some of these past
-          designs for inspiration!{" "}
+          <CarouselContainer>
+            <Arrow onClick={handlePrev}>&larr;</Arrow>
+
+            <StepContent>
+              <ToastWrapper className={pop ? "pop" : ""}>
+                <img
+                  src={steps[currentStep].image}
+                  alt={`Step ${currentStep + 1}`}
+                />
+              </ToastWrapper>
+
+              <StepText key={textKey}>{steps[currentStep].text}</StepText>
+            </StepContent>
+
+            <Arrow onClick={handleNext}>&rarr;</Arrow>
+          </CarouselContainer>
         </Paragraph>
         <SwatchSelector />
         <ProceedButton to="/customise">proceed</ProceedButton>

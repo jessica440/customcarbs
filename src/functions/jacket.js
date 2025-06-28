@@ -113,7 +113,7 @@ const JacketSVG = ({
     }
 
     // Body (grouped selection)
-    if (bodyPanelType === "3-panel") {
+    if (bodyPanelType === "3") {
       if (
         selectedPanel === "body-top" &&
         ["body-left-upper", "body-right-upper"].includes(panelId)
@@ -155,10 +155,7 @@ const JacketSVG = ({
       "body-right-bottom": "body-left-bottom",
     };
 
-    if (
-      bodyPanelType === "3-panel" &&
-      mirroredPanelMap[selectedPanel] === panelId
-    ) {
+    if (bodyPanelType === "3" && mirroredPanelMap[selectedPanel] === panelId) {
       return true;
     }
 
@@ -255,7 +252,7 @@ const JacketSVG = ({
         {renderSelectedText(231, 25, "collar")}
       </g>
 
-      {bodyPanelType === "2-panel" && (
+      {bodyPanelType === "2" && (
         <>
           {/* Body Left Top */}
           <g
@@ -323,7 +320,7 @@ const JacketSVG = ({
         </>
       )}
 
-      {bodyPanelType === "3-panel" && (
+      {bodyPanelType === "3" && (
         <>
           {/* Body Left Upper */}
           <g
