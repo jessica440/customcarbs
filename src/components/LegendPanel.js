@@ -32,7 +32,6 @@ const panelLabelMap = {
   "body-right-bottom": "bottom right front",
 
   // Body (2-panel)
-  // You can remove these if you're no longer using them
   "body-left-upper": "upper left front",
   "body-left-lower": "lower left front",
   "body-right-upper": "upper right front",
@@ -52,40 +51,46 @@ const getSwatchName = (url) => {
 };
 
 const LegendPanel = ({ panelFills, panelType, bodyPanelType }) => {
+  const armPanels =
+    panelType === "3"
+      ? [
+          "arm-top-left",
+          "arm-middle-left",
+          "arm-bottom-left",
+          "arm-top-right",
+          "arm-middle-right",
+          "arm-bottom-right",
+        ]
+      : [
+          "upper-left-arm",
+          "lower-left-arm",
+          "upper-right-arm",
+          "lower-right-arm",
+        ];
+
+  const bodyPanels =
+    bodyPanelType === "3"
+      ? [
+          "body-left-upper",
+          "body-left-middle",
+          "body-left-bottom",
+          "body-right-upper",
+          "body-right-middle",
+          "body-right-bottom",
+        ]
+      : [
+          "body-left-top",
+          "body-left-lower",
+          "body-right-top",
+          "body-right-lower",
+        ];
+
+  const extras = ["collar", "wristband-left", "wristband-right", "waistband"];
+
   const groupedPanelOrder = {
-    Arms:
-      panelType === "3"
-        ? [
-            "arm-top-left",
-            "arm-middle-left",
-            "arm-bottom-left",
-            "arm-top-right",
-            "arm-middle-right",
-            "arm-bottom-right",
-          ]
-        : [
-            "upper-left-arm",
-            "lower-left-arm",
-            "upper-right-arm",
-            "lower-right-arm",
-          ],
-    Body:
-      bodyPanelType === "3"
-        ? [
-            "body-left-top",
-            "body-left-middle",
-            "body-left-bottom",
-            "body-right-top",
-            "body-right-middle",
-            "body-right-bottom",
-          ]
-        : [
-            "body-left-top",
-            "body-left-bottom",
-            "body-right-top",
-            "body-right-bottom",
-          ],
-    Extras: ["collar", "wristband-left", "wristband-right", "waistband"],
+    Arms: armPanels,
+    Body: bodyPanels,
+    Extras: extras,
   };
   console.log(
     "bodyPanelType in LegendPanel:",

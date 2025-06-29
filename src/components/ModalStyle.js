@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Pointer from "../images/pointer2.svg";
 
 export const ModalOverlay = styled.div`
   position: fixed;
@@ -34,8 +35,7 @@ export const CloseButton = styled.button`
   border: none;
   font-size: 1.5rem;
   color: #888;
-  cursor: pointer;
-
+  cursor: url(${Pointer}) 0 0, pointer;
   &:hover {
     color: #000;
   }

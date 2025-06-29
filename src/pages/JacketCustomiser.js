@@ -219,7 +219,7 @@ const JacketCustomiser = () => {
     wristbands: "Wristbands",
   };
 
-  const requiredPanels = [
+  let requiredPanels = [
     ...(panelType === "3"
       ? [
           "arm-top-left",
@@ -246,15 +246,23 @@ const JacketCustomiser = () => {
         ]
       : [
           "body-left-top",
-          "body-left-bottom",
+          "body-left-lower",
           "body-right-top",
-          "body-right-bottom",
+          "body-right-lower",
         ]),
     "wristband-left",
     "wristband-right",
     "collar",
     "waistband",
   ];
+  const mirroredPanelsEnabled = mirrorSides;
+  const filteredRequiredPanels = mirroredPanelsEnabled
+    ? requiredPanels.filter(
+        (id) => !id.includes("-right") || id.startsWith("wristband")
+      )
+    : requiredPanels;
+  const allFilled = filteredRequiredPanels.every((id) => panelFills[id]);
+
   console.log("panelType:", panelType);
   console.log("bodyPanelType:", bodyPanelType);
   console.log("requiredPanels:", requiredPanels);
@@ -263,6 +271,7 @@ const JacketCustomiser = () => {
     "MISSING PANELS:",
     requiredPanels.filter((id) => !panelFills[id])
   );
+  console.log("allFilled:", allFilled);
 
   const allPanelsFilled = requiredPanels.every((id) => panelFills[id]);
 

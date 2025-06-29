@@ -19,12 +19,19 @@ const Modal = ({
         <CloseButton onClick={onClose}>×</CloseButton>
 
         {/* Jacket preview */}
-        <div style={{ width: "100%", marginBottom: "1.5rem" }}>
+        <div
+          style={{
+            width: "100%",
+            marginBottom: "1.5rem",
+            pointerEvents: "none",
+          }}
+        >
           <JacketSVG
             panelFills={panelFills}
             panelType={panelType}
             bodyPanelType={bodyPanelType}
             mirrorSides={mirrorSides}
+            disableClicks={true}
           />
         </div>
 
