@@ -44,7 +44,34 @@ const JacketSVG = ({
   selectedPanel,
   panelType,
   bodyPanelType,
+  mirrorSides,
 }) => {
+  const [hoveredPanel, setHoveredPanel] = React.useState(null);
+
+  const mirrorMap = {
+    "body-left-upper": "body-right-upper",
+    "body-right-upper": "body-left-upper",
+    "body-left-middle": "body-right-middle",
+    "body-right-middle": "body-left-middle",
+    "body-left-bottom": "body-right-bottom",
+    "body-right-bottom": "body-left-bottom",
+    "body-left-top": "body-right-top",
+    "body-right-top": "body-left-top",
+    "body-left-lower": "body-right-lower",
+    "body-right-lower": "body-left-lower",
+    "upper-left-arm": "upper-right-arm",
+    "upper-right-arm": "upper-left-arm",
+    "lower-left-arm": "lower-right-arm",
+    "lower-right-arm": "lower-left-arm",
+    "arm-top-left": "arm-top-right",
+    "arm-top-right": "arm-top-left",
+    "arm-middle-left": "arm-middle-right",
+    "arm-middle-right": "arm-middle-left",
+    "arm-bottom-left": "arm-bottom-right",
+    "arm-bottom-right": "arm-bottom-left",
+    "wristband-left": "wristband-right",
+    "wristband-right": "wristband-left",
+  };
   const isSelected = (panelId) => {
     if (selectedPanel === panelId) return true;
 
@@ -86,7 +113,7 @@ const JacketSVG = ({
     }
 
     // Body (grouped selection)
-    if (bodyPanelType === "3-panel") {
+    if (bodyPanelType === "3") {
       if (
         selectedPanel === "body-top" &&
         ["body-left-upper", "body-right-upper"].includes(panelId)
@@ -128,19 +155,18 @@ const JacketSVG = ({
       "body-right-bottom": "body-left-bottom",
     };
 
-    if (
-      bodyPanelType === "3-panel" &&
-      mirroredPanelMap[selectedPanel] === panelId
-    ) {
+    if (bodyPanelType === "3" && mirroredPanelMap[selectedPanel] === panelId) {
       return true;
     }
 
     return false;
   };
-  const [hoveredPanel, setHoveredPanel] = React.useState(null);
+  //   const [hoveredPanel, setHoveredPanel] = React.useState(null);
 
   const getFill = (panelId) => {
-    if (hoveredPanel === panelId) {
+    const mirrored = mirrorSides && mirrorMap[hoveredPanel] === panelId;
+
+    if (hoveredPanel === panelId || mirrored) {
       return "var(--green)";
     }
 
@@ -226,7 +252,7 @@ const JacketSVG = ({
         {renderSelectedText(231, 25, "collar")}
       </g>
 
-      {bodyPanelType === "2-panel" && (
+      {bodyPanelType === "2" && (
         <>
           {/* Body Left Top */}
           <g
@@ -294,7 +320,7 @@ const JacketSVG = ({
         </>
       )}
 
-      {bodyPanelType === "3-panel" && (
+      {bodyPanelType === "3" && (
         <>
           {/* Body Left Upper */}
           <g

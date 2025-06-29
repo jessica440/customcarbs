@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Pointer from "../images/pointer2.svg";
 
 export const PanelWrapper = styled.div`
   background: white;
@@ -39,6 +40,8 @@ export const ToggleSlider = styled.span`
   border-radius: 50px;
   position: relative;
   transition: background 0.3s;
+  cursor: url(${Pointer}) 0 0, pointer;
+
   &::before {
     content: "";
     position: absolute;
@@ -64,7 +67,7 @@ export const TabButton = styled.button`
   color: ${(props) => (props.$active ? "white" : "black")};
   border: 1px solid black;
   font-weight: bold;
-  cursor: pointer;
+  cursor: url(${Pointer}) 0 0, pointer;
 `;
 
 export const OptionCard = styled.div`
@@ -72,7 +75,7 @@ export const OptionCard = styled.div`
   padding: 1rem;
   margin-bottom: 1rem;
   background: ${(props) => (props.$selected ? "#e9e2ff" : "#f7f7f7")};
-  cursor: pointer;
+  cursor: url(${Pointer}) 0 0, pointer;
   transition: 0.2s;
 `;
 
@@ -103,6 +106,7 @@ export const ExtraItem = styled.label`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   input {
     margin-right: 0.5rem;
   }

@@ -92,29 +92,29 @@ const AdvancedOptionsPanel = ({
       {activeTab === "body" && (
         <>
           <OptionCard
-            $selected={bodyPanelType === "2-panel"}
-            onClick={() => setBodyPanelType("2-panel")}
+            $selected={bodyPanelType === "2"}
+            onClick={() => setBodyPanelType("2")}
           >
             <OptionText>
               <strong>2 panel</strong>
               <br />
               choose two furs
-              {bodyPanelType === "2-panel" && (
+              {bodyPanelType === "2" && (
                 <span className="selected">selected</span>
               )}
             </OptionText>
           </OptionCard>
 
           <OptionCard
-            $selected={bodyPanelType === "3-panel"}
-            onClick={() => setBodyPanelType("3-panel")}
+            $selected={bodyPanelType === "3"}
+            onClick={() => setBodyPanelType("3")}
           >
             <OptionText>
               <strong>3 panel</strong>
               <br />
               choose three furs
               <span className="price">+ £10</span>
-              {bodyPanelType === "3-panel" && (
+              {bodyPanelType === "3" && (
                 <span className="selected">selected</span>
               )}
             </OptionText>

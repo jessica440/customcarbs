@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import bluePink from "../images/furs/blue-pink.png"; // Add your actual swatch image paths
-import carnival from "../images/furs/carnival.png";
-import cow from "../images/furs/cow.png";
+import coat1 from "../images/coat1.jpeg"; // Add your actual swatch image paths
+import coat2 from "../images/coat2.jpeg";
+import coat3 from "../images/coat3.jpeg";
+import coat4 from "../images/coat4.jpg";
 
 const SwatchContainer = styled.div`
   display: flex;
@@ -22,9 +23,10 @@ const Swatch = styled.img`
 export default function SwatchSelector() {
   return (
     <SwatchContainer>
-      <Swatch src={bluePink} alt="Swatch 1" />
-      <Swatch src={carnival} alt="Swatch 2" />
-      <Swatch src={cow} alt="Swatch 3" />
+      <Swatch src={coat1} alt="Swatch 1" />
+      <Swatch src={coat2} alt="Swatch 2" />
+      <Swatch src={coat3} alt="Swatch 3" />
+      <Swatch src={coat4} alt="Swatch 3" />
     </SwatchContainer>
   );
 }
