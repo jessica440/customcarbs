@@ -239,10 +239,10 @@ const JacketCustomiser = () => {
       ? [
           "body-left-upper",
           "body-left-middle",
-          "body-left-lower",
+          "body-left-bottom",
           "body-right-upper",
           "body-right-middle",
-          "body-right-lower",
+          "body-right-bottom",
         ]
       : [
           "body-left-top",
