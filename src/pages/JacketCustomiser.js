@@ -90,6 +90,13 @@ const JacketCustomiser = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handlePanelClick = (panel) => {
+    //   for (const [group, panels] of Object.entries(mirroredGroups)) {
+    //     if (panels.includes(panel)) {
+    //       return setSelectedPanel(panel)
+    //     }
+    //   }
+    //   setSelectedPanel(panel);
+    // };
     if (!mirrorSides) return setSelectedPanel(panel);
 
     const mirroredGroups = {
@@ -247,7 +254,15 @@ const JacketCustomiser = () => {
     "wristband-right",
     "collar",
     "waistband",
-  ].flat();
+  ];
+  console.log("panelType:", panelType);
+  console.log("bodyPanelType:", bodyPanelType);
+  console.log("requiredPanels:", requiredPanels);
+  console.log("panelFills:", panelFills);
+  console.log(
+    "MISSING PANELS:",
+    requiredPanels.filter((id) => !panelFills[id])
+  );
 
   const allPanelsFilled = requiredPanels.every((id) => panelFills[id]);
 

@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import Pointer from "../images/pointer2.svg";
 
 const popAnimation = keyframes`
   0% { transform: scale(1); }
@@ -17,6 +18,10 @@ const SlideIn = keyframes`
 }
 `;
 
+export const Img = styled.img`
+  width: 250px;
+`;
+
 export const CarouselContainer = styled.div`
   display: flex;
   align-items: center;
@@ -32,7 +37,11 @@ export const StepContent = styled.div`
   width: 400px;
   min-height: 100px;
   justify-content: flex-start;
-  padding: 0.5rem 0;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 3px;
+  box-shadow: 5px 5px black;
+  background: white;
 `;
 
 export const ToastWrapper = styled.div`
@@ -73,6 +82,7 @@ export const PageContainer = styled.div`
   background-color: var(--button-text);
   color: var(--button);
   font-family: "Poppins", sans-serif;
+  height: 100vh;
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 1rem;
@@ -87,6 +97,7 @@ export const PageContent = styled.div`
 export const Heading = styled.h1`
   font-size: 2rem;
   margin-bottom: 1rem;
+  color: black;
 `;
 
 export const Paragraph = styled.p`
@@ -110,11 +121,12 @@ export const Content = styled.div`
 //   gap: 1rem;
 // `;
 
-export const Arrow = styled.button`
+export const Arrow = styled.img`
   background: none;
   border: none;
   font-size: 2rem;
-  cursor: pointer;
+  width: 30px;
+  cursor: url(${Pointer}) 0 0, pointer;
   padding: 0.5rem 1rem;
   transition: 0.2s ease;
   &:hover {
