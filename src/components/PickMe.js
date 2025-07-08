@@ -1,10 +1,16 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import Pointer from "../images/pointer2.svg";
 
 export const PickMe = styled.button`
-  background: ${({ disabled }) => (disabled ? "#ddd" : "#513b56")};
-  color: ${({ disabled }) => (disabled ? "#888" : "white")};
+  background: ${({ disabled }) =>
+    disabled
+      ? "#ddd"
+      : "linear-gradient(135deg, #f097bf, #f2bd6d, #fcf35e, #bffa8d, #8ad2fb)"};
+  animation: ${({ disabled }) =>
+    disabled ? "none" : "gradient 5s infinite linear"};
+  background-size: ${({ disabled }) => (disabled ? "initial" : "300% 300%")};
+  color: ${({ disabled }) => (disabled ? "#888" : "black")};
   border: none;
   padding: 1rem 2rem;
   border-radius: 50px;
@@ -12,7 +18,17 @@ export const PickMe = styled.button`
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   position: relative;
   transition: background 0.2s;
-
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
   &:hover::after {
     content: ${({ disabled }) =>
       disabled ? '"❌ Fill in all panels first!"' : '""'};

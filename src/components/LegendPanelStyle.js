@@ -51,5 +51,23 @@ export const GroupTitle = styled.h4`
 `;
 
 export const GroupWrapper = styled.div`
-  margin-bottom: 1rem;
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+
+  &.extras-group {
+    order: 2;
+  }
+
+  &.arms-group {
+    order: 0;
+  }
+
+  &.body-group {
+    order: 1;
+  }
+
+  &.trims-group {
+    order: 3;
+  }
 `;

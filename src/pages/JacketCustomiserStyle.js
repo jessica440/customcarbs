@@ -158,6 +158,7 @@ export const Swatches = styled.div`
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0.5rem;
+  border: 1px solid black;
 `;
 
 export const Swatch = styled.img`
@@ -169,6 +170,26 @@ export const Swatch = styled.img`
   cursor: url(${Pointer}) 0 0, pointer;
   &:hover {
     border: 4px solid var(--purple);
+  }
+`;
+
+export const SwatchScrollArea = styled.div`
+  max-height: 60vh;
+  overflow-y: auto;
+  margin-top: 1rem;
+
+  @media (min-width: 768px) {
+    max-height: none;
+    overflow: visible;
+  }
+
+  /* scrollbar style */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
   }
 `;
 
@@ -204,4 +225,5 @@ export const Price = styled.div`
   font-size: 2rem;
   font-weight: bold;
   color: #360048;
+  padding: 1rem;
 `;

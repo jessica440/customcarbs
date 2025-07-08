@@ -9,13 +9,14 @@ export const PanelWrapper = styled.div`
 `;
 
 export const SectionTitle = styled.h3`
-  background: var(--purple);
+  background: black;
   color: white;
   font-size: 1rem;
   padding: 0.3rem 0.8rem;
   text-transform: uppercase;
   margin: 0 0 1rem;
   display: inline-block;
+  cursor: url(${Pointer}) 0 0, pointer;
 `;
 
 export const ToggleRow = styled.div`

@@ -1,5 +1,10 @@
 import React from "react";
-import { ModalOverlay, ModalContent, CloseButton } from "./ModalStyle";
+import {
+  ModalOverlay,
+  ModalContent,
+  CloseButton,
+  SvgWrapper,
+} from "./ModalStyle";
 import LegendPanel from "./LegendPanel";
 import JacketSVG from "../functions/jacket.js";
 
@@ -10,6 +15,7 @@ const Modal = ({
   panelType,
   bodyPanelType,
   mirrorSides,
+  extras,
 }) => {
   if (!isOpen) return null;
 
@@ -17,15 +23,9 @@ const Modal = ({
     <ModalOverlay onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <CloseButton onClick={onClose}>×</CloseButton>
-
+        <h1>nice one!</h1>
         {/* Jacket preview */}
-        <div
-          style={{
-            width: "100%",
-            marginBottom: "1.5rem",
-            pointerEvents: "none",
-          }}
-        >
+        <SvgWrapper>
           <JacketSVG
             panelFills={panelFills}
             panelType={panelType}
@@ -33,7 +33,7 @@ const Modal = ({
             mirrorSides={mirrorSides}
             disableClicks={true}
           />
-        </div>
+        </SvgWrapper>
 
         {/* Swatch list */}
         <LegendPanel
@@ -41,6 +41,7 @@ const Modal = ({
           panelType={panelType}
           bodyPanelType={bodyPanelType}
           mirrorSides={mirrorSides}
+          extras={extras}
         />
       </ModalContent>
     </ModalOverlay>

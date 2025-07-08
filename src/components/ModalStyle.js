@@ -14,8 +14,8 @@ export const ModalOverlay = styled.div`
 export const ModalContent = styled.div`
   background: #fff;
   border-radius: 16px;
-  padding: 2rem;
   width: 90%;
+  padding: 1rem;
   max-width: 700px;
   max-height: 90vh;
   overflow-y: auto;
@@ -24,8 +24,28 @@ export const ModalContent = styled.div`
 
   @media (max-width: 600px) {
     padding: 1rem;
+    max-height: 80vh;
+    max-width: 90%;
   }
 `;
+
+export const SvgWrapper = styled.div`
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 1.5rem;
+  pointer-events: none;
+
+  @media (max-width: 600px) {
+    max-width: 90%;
+    /* margin-bottom: 1rem; */
+  }
+`;
+
+// export const ContentWrapper = styled.div`
+//   overflow-y: auto;
+//   padding: 2rem;
+//   height: 100%;
+// `;
 
 export const CloseButton = styled.button`
   position: absolute;

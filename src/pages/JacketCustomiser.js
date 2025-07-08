@@ -8,6 +8,8 @@ import fabricOptions from "../functions/swatches.js";
 import JacketSVG from "../functions/jacket.js";
 import AdvancedOptionsPanel from "../components/AdvancedOptionsPanel.js";
 import Modal from "../components/Modal.js";
+import { HelpModal, HelpIcon } from "../components/HelpModal.js";
+import HelpIconImg from "../images/help.png";
 
 import {
   Wrapper,
@@ -32,6 +34,7 @@ import {
   SelectedLabel,
   Price,
   MirrorOption,
+  SwatchScrollArea,
 } from "./JacketCustomiserStyle";
 
 const BackButton = styled.button`
@@ -88,6 +91,7 @@ const JacketCustomiser = () => {
   const [activeTab, setActiveTab] = useState("arms");
   const [extras, setExtras] = useState({});
   const [isModalOpen, setModalOpen] = useState(false);
+  const [showHelp, setShowHelp] = useState(true);
 
   const handlePanelClick = (panel) => {
     //   for (const [group, panels] of Object.entries(mirroredGroups)) {
@@ -261,17 +265,6 @@ const JacketCustomiser = () => {
         (id) => !id.includes("-right") || id.startsWith("wristband")
       )
     : requiredPanels;
-  const allFilled = filteredRequiredPanels.every((id) => panelFills[id]);
-
-  console.log("panelType:", panelType);
-  console.log("bodyPanelType:", bodyPanelType);
-  console.log("requiredPanels:", requiredPanels);
-  console.log("panelFills:", panelFills);
-  console.log(
-    "MISSING PANELS:",
-    requiredPanels.filter((id) => !panelFills[id])
-  );
-  console.log("allFilled:", allFilled);
 
   const allPanelsFilled = requiredPanels.every((id) => panelFills[id]);
 
@@ -280,19 +273,30 @@ const JacketCustomiser = () => {
     setModalOpen(true);
   };
 
+  const BASE_PRICE = 250;
+  const extrasList = [
+    { label: "hood", price: 30 },
+    { label: "inside pocket", price: 8 },
+  ];
+  const extrasCost = extrasList.reduce((total, { label, price }) => {
+    return extras[label] ? total + price : total;
+  }, 0);
+
+  const finalPrice = BASE_PRICE + extrasCost;
+
   return (
     <Wrapper>
       <Header>
-        <Brand>custom carbs</Brand>
-        <Title>customise</Title>
-        <Subtitle>
-          click on a panel then select a swatch, choose how many arm or body
-          panels you'd like and select if you want to mirror the sides of your
-          design
-        </Subtitle>
-      </Header>
+        {/* <Brand>custom carbs</Brand> */}
+        <BackButton onClick={() => navigate(-1)}>Back</BackButton>
 
-      <BackButton onClick={() => navigate(-1)}>Back</BackButton>
+        {/* <Title>customise your jacket</Title> */}
+
+        <HelpIcon onClick={() => setShowHelp(true)}>
+          <img src={HelpIconImg} alt="Help" />
+        </HelpIcon>
+        {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
+      </Header>
 
       <CustomiserLayout>
         <AdvancedOptionsPanel
@@ -324,22 +328,23 @@ const JacketCustomiser = () => {
               groupLabels[selectedPanel] ||
               "swatches"}
           </CategoryTitle>
-          <Swatches>
-            {fabricOptions.map((img, i) => (
-              <Swatch
-                key={i}
-                src={img}
-                onClick={() => handleSwatchClick(img)}
-              />
-            ))}
-          </Swatches>
-          <ExtrasLabel>extras</ExtrasLabel>
+          <SwatchScrollArea>
+            <Swatches>
+              {fabricOptions.map((img, i) => (
+                <Swatch
+                  key={i}
+                  src={img}
+                  onClick={() => handleSwatchClick(img)}
+                />
+              ))}
+            </Swatches>
+          </SwatchScrollArea>
         </FabricPicker>
       </CustomiserLayout>
 
       <Summary>
         <PriceSummary>
-          <Price>£250</Price>
+          <Price>£{finalPrice}</Price>
           <PickMe
             // onClick={() => setModalOpen(true)}
             onClick={handlePickMe}
@@ -354,6 +359,7 @@ const JacketCustomiser = () => {
             panelType={panelType}
             bodyPanelType={bodyPanelType}
             mirrorSides={mirrorSides}
+            extras={extras}
           />
         </PriceSummary>
       </Summary>

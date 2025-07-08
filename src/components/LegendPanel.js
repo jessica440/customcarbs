@@ -10,6 +10,8 @@ import {
   GroupTitle,
 } from "./LegendPanelStyle";
 
+import { Price } from "../pages/JacketCustomiserStyle";
+
 const panelLabelMap = {
   // Arms
   "upper-left-arm": "top left arm",
@@ -50,7 +52,7 @@ const getSwatchName = (url) => {
   return name.split(".")[0];
 };
 
-const LegendPanel = ({ panelFills, panelType, bodyPanelType }) => {
+const LegendPanel = ({ panelFills, panelType, bodyPanelType, extras }) => {
   const armPanels =
     panelType === "3"
       ? [
@@ -85,23 +87,33 @@ const LegendPanel = ({ panelFills, panelType, bodyPanelType }) => {
           "body-right-lower",
         ];
 
-  const extras = ["collar", "wristband-left", "wristband-right", "waistband"];
+  const trims = ["collar", "wristband-left", "wristband-right", "waistband"];
 
   const groupedPanelOrder = {
     Arms: armPanels,
     Body: bodyPanels,
-    Extras: extras,
+    Trims: trims,
+    // Extras: extras,
   };
-  console.log(
-    "bodyPanelType in LegendPanel:",
-    bodyPanelType,
-    typeof bodyPanelType
-  );
+
+  const extrasList = [
+    { label: "hood", price: 30 },
+    { label: "inside pocket", price: 8 },
+  ];
+  const BASE_PRICE = 250;
+
+  const extrasTotal = extrasList.reduce((sum, { label, price }) => {
+    return extras[label] ? sum + price : sum;
+  }, 0);
+
+  const finalPrice = BASE_PRICE + extrasTotal;
+
   return (
     <LegendWrapper>
       {Object.entries(groupedPanelOrder).map(([groupTitle, panelIds]) => {
-        const visiblePanels = panelIds.filter((id) => panelFills[id]);
+        if (!Array.isArray(panelIds)) return null;
 
+        const visiblePanels = panelIds.filter((id) => panelFills[id]);
         if (visiblePanels.length === 0) return null;
 
         return (
@@ -119,6 +131,22 @@ const LegendPanel = ({ panelFills, panelType, bodyPanelType }) => {
           </GroupWrapper>
         );
       })}
+      {extras && extrasList.some(({ label }) => extras[label]) && (
+        <GroupWrapper key="Extras" className="extras-group">
+          <GroupTitle>Extras</GroupTitle>
+          {extrasList.map(({ label, price }) =>
+            extras[label] ? (
+              <LegendItem key={label}>
+                <LabelText>
+                  <LabelTitle>{label}</LabelTitle>
+                  <SwatchName>+£{price}</SwatchName>
+                </LabelText>
+              </LegendItem>
+            ) : null
+          )}
+          <Price>£{finalPrice}</Price>
+        </GroupWrapper>
+      )}
     </LegendWrapper>
   );
 };
