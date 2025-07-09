@@ -204,7 +204,14 @@ const JacketSVG = ({
   };
 
   return (
-    <svg viewBox="0 0 461.78 284.15" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      viewBox="0 0 461.78 284.15"
+      xmlns="http://www.w3.org/2000/svg"
+      width="100%"
+      height="100%"
+      preserveAspectRatio="xMidYMid meet"
+      style={{ maxWidth: "100%", height: "100%", display: "block" }}
+    >
       <defs>
         {panelIds.map((panel) => {
           const image = panelFills[panel];
