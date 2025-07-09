@@ -215,8 +215,8 @@ export const Swatches = styled.div`
 `;
 
 export const Swatch = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid white;
