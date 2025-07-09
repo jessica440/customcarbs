@@ -17,6 +17,16 @@ export const PriceSummary = styled.div`
 export const Wrapper = styled.div`
   padding: 2rem;
   font-family: "Arial", sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+`;
+
+export const ContentArea = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 6rem;
 `;
 
 export const Header = styled.header`
@@ -44,8 +54,26 @@ export const Subtitle = styled.p`
 
 export const CustomiserLayout = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   flex-wrap: wrap;
+  overflow: hidden;
+  flex; 1;
+  gap: 2rem;
+  height: 100vh;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+export const MainScrollArea = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  box-sizing: border-box;
 `;
 
 export const OptionsPanel = styled.div`
@@ -117,6 +145,12 @@ export const JacketDisplay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
   .clickable-panel {
     cursor: url(${Pointer}) 0 0, pointer;
     &:hover {
@@ -125,17 +159,22 @@ export const JacketDisplay = styled.div`
   }
 `;
 
-export const JacketSVGPlaceholder = styled.div`
-  width: 320px;
-  height: 320px;
-  background: #eee;
-  border: 2px dashed #aaa;
-`;
+// export const JacketSVGPlaceholder = styled.div`
+//   width: 320px;
+//   height: 320px;
+//   background: #eee;
+//   border: 2px dashed #aaa;
+// `;
 
 export const FabricPicker = styled.div`
   flex: 1;
   max-width: 180px;
   cursor: url(${Pointer}) 0 0, pointer;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 100%;
+  }
 `;
 
 export const CategoryTitle = styled.h4`
@@ -147,23 +186,35 @@ export const CategoryTitle = styled.h4`
 `;
 
 export const ExtrasLabel = styled.div`
-  background: black;
-  color: white;
+  background: ${(props) => (props.active ? "black" : "white")};
+  color: ${(props) => (props.active ? "white" : "black")};
   padding: 0.5rem;
   margin-top: 0.5rem;
+  font-weight: bold;
+  text-transform: lowercase;
+  text-align: center;
+  cursor: url(${Pointer}) 0 0, pointer;
+  border: 1px solid black;
+  flex: 1;
+
+  &:hover {
+    background: ${(props) => (props.active ? "black" : "#f0f0f0")};
+  }
 `;
 
 export const Swatches = styled.div`
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0.5rem;
   border: 1px solid black;
+  width: 100%;
 `;
 
 export const Swatch = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid white;
@@ -177,13 +228,31 @@ export const SwatchScrollArea = styled.div`
   max-height: 60vh;
   overflow-y: auto;
   margin-top: 1rem;
+  padding-bottom: 6rem;
 
-  @media (min-width: 768px) {
-    max-height: none;
-    overflow: visible;
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    justify-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0 1rem 6rem;
+    max-height: 300px;
+    overflow-y: scroll;
+    width: 100%;
+    padding: 0 1rem;
+    box-sizing: border-box;
   }
 
-  /* scrollbar style */
+  @media (min-width: 769px) {
+    max-height: none;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* optional scrollbar styling */
   &::-webkit-scrollbar {
     width: 6px;
   }
@@ -194,11 +263,19 @@ export const SwatchScrollArea = styled.div`
 `;
 
 export const Summary = styled.div`
-  margin-top: 2rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--green);
+  width: 100%;
+  padding: 1rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  z-index: 999;
+  box-sizing: border-box;
 `;
 
 export const Legend = styled.div`
@@ -226,4 +303,13 @@ export const Price = styled.div`
   font-weight: bold;
   color: #360048;
   padding: 1rem;
+`;
+
+export const MobileContainer = styled.div`
+  width: 100%;
+  padding: 1rem;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;

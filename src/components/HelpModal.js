@@ -9,7 +9,7 @@ const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 1000;
   /* cursor: url(${Pointer}) 0 0, pointer; */
 `;
 
@@ -20,6 +20,9 @@ const Modal = styled.div`
   max-width: 500px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  @media (max-width: 768px) {
+    max-width: 80%;
+  }
 `;
 
 const Close = styled.button`

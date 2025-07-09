@@ -21,3 +21,7 @@ code {
   /* --paragraph: #8f7a98; */
   --paragraph: black;
 }
+
+/* * {
+  box-sizing: border-box;
+} */

@@ -13,6 +13,7 @@ const ProceedButton = styled(Link)`
     #8ad2fb
   );
   border: 1px solid black;
+  width: 60px;
   /* box-shadow: 3px 3px black; */
   animation: gradient 5s infinite linear;
   background-size: 300% 300%;

@@ -21,6 +21,13 @@ import {
   StepText,
   ToastWrapper,
   Img,
+  Content2,
+  ImgWrapper,
+  Layout,
+  ArrowControls,
+  ArrowLeft,
+  ArrowRight,
+  MobileArrowWrapper,
 } from "./CustomOrdersStyle";
 
 const CustomOrders = () => {
@@ -49,17 +56,22 @@ const CustomOrders = () => {
 
   return (
     <PageContainer>
-      <CustomJacketCard />
-      <Content>
-        <Img src={Banner} alt="Custom Orders" />
-        <Heading>how it works</Heading>
-        <Paragraph>
-          Custom coats for bodies. All bodies. Just send your measurements and
-          pick your favourite swatches!
-          <CarouselContainer>
-            <Arrow onClick={handlePrev} src={Prev} />
+      <Layout>
+        <ImgWrapper>
+          <CustomJacketCard />
+        </ImgWrapper>
 
-            {/* <Img src={Rainbow} alt="Rainbow" /> */}
+        <Content>
+          <Img src={Banner} alt="Custom Orders" />
+          <Heading>how it works</Heading>
+          <Paragraph>
+            Custom coats for bodies. All bodies. Just send your measurements and
+            pick your favourite swatches!
+          </Paragraph>
+
+          <CarouselContainer>
+            <ArrowLeft className="desktop" onClick={handlePrev} src={Prev} />
+
             <StepContent>
               <ToastWrapper className={pop ? "pop" : ""}>
                 <img
@@ -67,16 +79,21 @@ const CustomOrders = () => {
                   alt={`Step ${currentStep + 1}`}
                 />
               </ToastWrapper>
-
               <StepText key={textKey}>{steps[currentStep].text}</StepText>
             </StepContent>
 
-            <Arrow onClick={handleNext} src={Next} />
+            <ArrowRight className="desktop" onClick={handleNext} src={Next} />
+
+            <MobileArrowWrapper>
+              <ArrowLeft onClick={handlePrev} src={Prev} />
+              <ArrowRight onClick={handleNext} src={Next} />
+            </MobileArrowWrapper>
           </CarouselContainer>
-        </Paragraph>
-        <SwatchSelector />
-        <ProceedButton to="/customise">proceed</ProceedButton>
-      </Content>
+
+          <SwatchSelector />
+          <ProceedButton to="/customise">proceed</ProceedButton>
+        </Content>
+      </Layout>
     </PageContainer>
   );
 };

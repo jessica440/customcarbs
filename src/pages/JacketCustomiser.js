@@ -19,11 +19,6 @@ import {
   Title,
   Subtitle,
   CustomiserLayout,
-  // OptionsPanel,
-  // OptionTitle,
-  // ArmsTab,
-  // ArmOption,
-  // ArmImage,
   JacketDisplay,
   CategoryTitle,
   FabricPicker,
@@ -35,6 +30,7 @@ import {
   Price,
   MirrorOption,
   SwatchScrollArea,
+  MainScrollArea,
 } from "./JacketCustomiserStyle";
 
 const BackButton = styled.button`
@@ -92,6 +88,7 @@ const JacketCustomiser = () => {
   const [extras, setExtras] = useState({});
   const [isModalOpen, setModalOpen] = useState(false);
   const [showHelp, setShowHelp] = useState(true);
+  const [advanced, setAdvanced] = useState(false);
 
   const handlePanelClick = (panel) => {
     //   for (const [group, panels] of Object.entries(mirroredGroups)) {
@@ -299,47 +296,61 @@ const JacketCustomiser = () => {
       </Header>
 
       <CustomiserLayout>
-        <AdvancedOptionsPanel
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          panelType={panelType}
-          setPanelType={setPanelType}
-          bodyPanelType={bodyPanelType}
-          setBodyPanelType={setBodyPanelType}
-          mirrorSides={mirrorSides}
-          setMirrorSides={setMirrorSides}
-          extras={extras}
-          setExtras={setExtras}
-        />
-        <JacketDisplay>
-          <JacketSVG
-            onPanelClick={handlePanelClick}
-            panelFills={panelFills}
-            selectedPanel={selectedPanel}
-            panelType={panelType}
-            bodyPanelType={bodyPanelType}
-            mirrorSides={mirrorSides}
-          />
-        </JacketDisplay>
+        <MainScrollArea>
+          <JacketDisplay>
+            <JacketSVG
+              onPanelClick={handlePanelClick}
+              panelFills={panelFills}
+              selectedPanel={selectedPanel}
+              panelType={panelType}
+              bodyPanelType={bodyPanelType}
+              mirrorSides={mirrorSides}
+            />
+          </JacketDisplay>
 
-        <FabricPicker>
-          <CategoryTitle>
-            {panelLabels[selectedPanel] ||
-              groupLabels[selectedPanel] ||
-              "swatches"}
-          </CategoryTitle>
-          <SwatchScrollArea>
-            <Swatches>
-              {fabricOptions.map((img, i) => (
-                <Swatch
-                  key={i}
-                  src={img}
-                  onClick={() => handleSwatchClick(img)}
-                />
-              ))}
-            </Swatches>
-          </SwatchScrollArea>
-        </FabricPicker>
+          <FabricPicker>
+            <CategoryTitle>
+              <ExtrasLabel
+                active={!advanced}
+                onClick={() => setAdvanced(false)}
+              >
+                {panelLabels[selectedPanel] ||
+                  groupLabels[selectedPanel] ||
+                  "swatches"}
+              </ExtrasLabel>
+              <ExtrasLabel active={advanced} onClick={() => setAdvanced(true)}>
+                advanced options
+              </ExtrasLabel>
+            </CategoryTitle>
+
+            {!advanced ? (
+              <SwatchScrollArea>
+                <Swatches>
+                  {fabricOptions.map((img, i) => (
+                    <Swatch
+                      key={i}
+                      src={img}
+                      onClick={() => handleSwatchClick(img)}
+                    />
+                  ))}
+                </Swatches>
+              </SwatchScrollArea>
+            ) : (
+              <AdvancedOptionsPanel
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                panelType={panelType}
+                setPanelType={setPanelType}
+                bodyPanelType={bodyPanelType}
+                setBodyPanelType={setBodyPanelType}
+                mirrorSides={mirrorSides}
+                setMirrorSides={setMirrorSides}
+                extras={extras}
+                setExtras={setExtras}
+              />
+            )}
+          </FabricPicker>
+        </MainScrollArea>
       </CustomiserLayout>
 
       <Summary>
