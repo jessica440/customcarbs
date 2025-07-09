@@ -31,7 +31,7 @@ export const ContentArea = styled.div`
 
 export const Header = styled.header`
   text-align: left;
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
 `;
 
 export const Brand = styled.h1`
@@ -186,19 +186,21 @@ export const CategoryTitle = styled.h4`
   padding: 0.5rem;
   margin: 0;
   text-transform: lowercase;
+  font-size: 1rem;
 `;
 
 export const ExtrasLabel = styled.div`
   background: ${(props) => (props.active ? "black" : "white")};
   color: ${(props) => (props.active ? "white" : "black")};
   padding: 0.5rem;
-  margin-top: 0.5rem;
+  /* margin: 0.5rem; */
   font-weight: bold;
   text-transform: lowercase;
   text-align: center;
   cursor: url(${Pointer}) 0 0, pointer;
   border: 1px solid black;
   flex: 1;
+  height: 15px;
 
   &:hover {
     background: ${(props) => (props.active ? "black" : "#f0f0f0")};

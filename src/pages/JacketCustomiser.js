@@ -32,7 +32,7 @@ const BackButton = styled.button`
   background-color: var(--button);
   color: var(--button-text);
   font-size: 1rem;
-  padding: 0.8rem 1.5rem;
+  padding: 0.5rem 1rem;
   margin-top: 2rem;
   border: none;
   border-radius: 50px;
