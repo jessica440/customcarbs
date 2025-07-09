@@ -1,6 +1,4 @@
-import styled, { keyframes } from "styled-components";
-import { Link } from "react-router-dom";
-import Pointer from "../images/pointer2.svg";
+import styled from "styled-components";
 
 export const PickMe = styled.button`
   background: ${({ disabled }) =>

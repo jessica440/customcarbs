@@ -1,7 +1,6 @@
 import React from "react";
 import {
   PanelWrapper,
-  SectionTitle,
   ToggleRow,
   ToggleLabel,
   ToggleInput,
@@ -12,7 +11,6 @@ import {
   OptionText,
   ExtrasList,
   ExtraItem,
-  AdvancedOptionsToggle,
 } from "./AdvancedOptionsPanelStyle";
 
 const AdvancedOptionsPanel = ({
