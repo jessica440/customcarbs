@@ -239,11 +239,12 @@ export const Swatch = styled.img`
 export const SwatchScrollArea = styled.div`
   max-height: 60vh;
   overflow-y: auto;
+  overflow-x: hidden;
   margin-top: 1rem;
-  padding: 0 1rem 6rem;
+  padding-bottom: 6rem;
   -webkit-overflow-scrolling: touch;
 
-  /* @media (max-width: 768px) {
+  @media (max-width: 768px) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     justify-items: center;
@@ -251,11 +252,12 @@ export const SwatchScrollArea = styled.div`
     gap: 1rem;
     padding: 0 1rem 6rem;
     max-height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
     padding: 0 1rem;
     box-sizing: border-box;
-  } */
+  }
 
   @media (min-width: 769px) {
     max-height: none;
