@@ -122,9 +122,9 @@ export const MobileArrowWrapper = styled.div`
 export const StepContent = styled.div`
   display: flex;
   align-items: flex-start;
-  gap: 1.5rem;
+  gap: 1rem;
   width: 400px;
-  min-height: 100px;
+  min-height: 125px;
   justify-content: flex-start;
   padding: 20px;
   border: 1px solid black;
@@ -134,7 +134,7 @@ export const StepContent = styled.div`
 
   @media (max-width: 768px) {
     order: 1;
-    max-width: 80%;
+    max-width: 70%;
   }
 `;
 
