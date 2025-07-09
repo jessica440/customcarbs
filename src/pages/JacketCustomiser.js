@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import LegendPanel from "../components/LegendPanel";
 import Pointer from "../images/pointer2.svg";
 import { PickMe } from "../components/PickMe";
 import fabricOptions from "../functions/swatches.js";
@@ -15,9 +14,6 @@ import {
   Wrapper,
   PriceSummary,
   Header,
-  Brand,
-  Title,
-  Subtitle,
   CustomiserLayout,
   JacketDisplay,
   CategoryTitle,
@@ -26,9 +22,7 @@ import {
   Swatch,
   ExtrasLabel,
   Summary,
-  SelectedLabel,
   Price,
-  MirrorOption,
   SwatchScrollArea,
   MainScrollArea,
 } from "./JacketCustomiserStyle";
@@ -262,6 +256,7 @@ const JacketCustomiser = () => {
         (id) => !id.includes("-right") || id.startsWith("wristband")
       )
     : requiredPanels;
+  console.log("Filtered Required Panels:", filteredRequiredPanels);
 
   const allPanelsFilled = requiredPanels.every((id) => panelFills[id]);
 

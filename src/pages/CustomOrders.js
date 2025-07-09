@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
 import CustomJacketCard from "../components/CustomJacketCard";
 import SwatchSelector from "../components/SwatchSelector";
 import ProceedButton from "../components/ProceedButton";
 import { steps } from "../functions/steps";
 import Banner from "../images/banner.png";
-import Rainbow from "../images/rainbow.png";
 import Prev from "../images/prev.svg";
 import Next from "../images/next.svg";
 import {
@@ -14,17 +11,13 @@ import {
   Heading,
   Paragraph,
   CarouselContainer,
-  Arrow,
   StepContent,
   Content,
-  StepImg,
   StepText,
   ToastWrapper,
   Img,
-  Content2,
   ImgWrapper,
   Layout,
-  ArrowControls,
   ArrowLeft,
   ArrowRight,
   MobileArrowWrapper,
