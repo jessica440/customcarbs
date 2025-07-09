@@ -38,6 +38,7 @@ const Close = styled.button`
 
 export const HelpIcon = styled.button`
   background: none;
+  padding: 0.5rem;
   border: none;
   z-index: 50;
   cursor: url(${Pointer}) 0 0, pointer;

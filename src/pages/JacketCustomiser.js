@@ -33,7 +33,7 @@ const BackButton = styled.button`
   color: var(--button-text);
   font-size: 1rem;
   padding: 0.5rem 1rem;
-  /* margin-top: 2rem; */
+  margin-top: 0.5rem;
   border: none;
   border-radius: 50px;
   cursor: url(${Pointer}) 0 0, pointer;

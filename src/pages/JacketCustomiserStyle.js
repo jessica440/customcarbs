@@ -15,7 +15,7 @@ export const PriceSummary = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  padding: 2rem;
+  /* padding: 2rem; */
   font-family: "Arial", sans-serif;
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@ export const Wrapper = styled.div`
 
 export const ContentArea = styled.div`
   flex: 1;
-  overflow-y: auto;
+  overflow-y: hidden;
   padding-bottom: 6rem;
 `;
 
@@ -83,6 +83,13 @@ export const MainScrollArea = styled.div`
   padding: 1rem;
   box-sizing: border-box;
 `;
+
+// export const StaticScreen = styled.div`
+//   height: 100vh;
+//   overflow: hidden;
+//   display: flex;
+//   flex-direction: column;
+// `;
 
 export const OptionsPanel = styled.div`
   flex: 1;
@@ -154,7 +161,7 @@ export const JacketDisplay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -50px;
+  margin-top: -30px;
 
   @media (max-width: 768px) {
     width: 100%;
