@@ -10,7 +10,7 @@ export const PickMe = styled.button`
   background-size: ${({ disabled }) => (disabled ? "initial" : "300% 300%")};
   color: ${({ disabled }) => (disabled ? "#888" : "black")};
   border: none;
-  padding: 1rem 2rem;
+  padding: 0.5rem 1rem;
   border-radius: 50px;
   font-size: 1rem;
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
@@ -37,9 +37,9 @@ export const PickMe = styled.button`
     transform: translateX(-50%);
     background: #fff4f4;
     border: 1px solid #ff4d4d;
-    padding: 0.4rem 0.7rem;
+    padding: 0.2rem 0.3rem;
     border-radius: 6px;
-    font-size: 0.75rem;
+    font-size: 0.5rem;
     color: #b30000;
     white-space: nowrap;
     z-index: 5;

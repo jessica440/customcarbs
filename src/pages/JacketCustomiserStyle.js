@@ -11,7 +11,7 @@ export const PriceSummary = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 0.2rem;
 `;
 
 export const Wrapper = styled.div`
@@ -146,6 +146,7 @@ export const SelectedLabel = styled.span`
 
 export const PriceLabel = styled.span`
   font-weight: bold;
+  /* font-size: 1rem; */
 `;
 
 export const JacketDisplay = styled.div`
@@ -248,7 +249,7 @@ export const SwatchScrollArea = styled.div`
     justify-content: center;
     gap: 1rem;
     padding: 0 1rem 6rem;
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: scroll;
     width: 100%;
     padding: 0 1rem;
@@ -310,10 +311,10 @@ export const LegendItem = styled.div`
 `;
 
 export const Price = styled.div`
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #360048;
-  padding: 1rem;
+  padding: 0.5rem;
 `;
 
 export const MobileContainer = styled.div`
