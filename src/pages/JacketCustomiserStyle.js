@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
 export const ContentArea = styled.div`
@@ -83,13 +83,6 @@ export const MainScrollArea = styled.div`
   padding: 1rem;
   box-sizing: border-box;
 `;
-
-// export const StaticScreen = styled.div`
-//   height: 100vh;
-//   overflow: hidden;
-//   display: flex;
-//   flex-direction: column;
-// `;
 
 export const OptionsPanel = styled.div`
   flex: 1;
@@ -247,9 +240,10 @@ export const SwatchScrollArea = styled.div`
   max-height: 60vh;
   overflow-y: auto;
   margin-top: 1rem;
-  padding-bottom: 6rem;
+  padding: 0 1rem 6rem;
+  -webkit-overflow-scrolling: touch;
 
-  @media (max-width: 768px) {
+  /* @media (max-width: 768px) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     justify-items: center;
@@ -261,7 +255,7 @@ export const SwatchScrollArea = styled.div`
     width: 100%;
     padding: 0 1rem;
     box-sizing: border-box;
-  }
+  } */
 
   @media (min-width: 769px) {
     max-height: none;
