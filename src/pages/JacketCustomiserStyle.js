@@ -54,6 +54,8 @@ export const Subtitle = styled.p`
 
 export const CustomiserLayout = styled.div`
   display: flex;
+   position: sticky;
+   bottom: 0;
   flex-direction: column;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -269,7 +271,7 @@ export const Summary = styled.div`
   right: 0;
   background: var(--green);
   width: 100%;
-  padding: 1rem 1.5rem;
+  padding: 0.2rem 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

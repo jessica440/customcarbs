@@ -58,7 +58,7 @@ export const ToggleSlider = styled.span`
 
 export const TabButtons = styled.div`
   display: flex;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
 `;
 
 export const TabButton = styled.button`
@@ -74,7 +74,7 @@ export const TabButton = styled.button`
 export const OptionCard = styled.div`
   border: 2px solid ${(props) => (props.$selected ? "var(--purple)" : "#ccc")};
   padding: 1rem;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   background: ${(props) => (props.$selected ? "#e9e2ff" : "#f7f7f7")};
   cursor: url(${Pointer}) 0 0, pointer;
   transition: 0.2s;
@@ -100,6 +100,7 @@ export const ExtrasList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-top: 1rem;
 `;
 
 export const ExtraItem = styled.label`

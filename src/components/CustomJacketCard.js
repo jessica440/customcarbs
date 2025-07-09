@@ -59,7 +59,9 @@ export default function CustomJacketCard() {
   return (
     <JacketWrapper>
       <SparkleGif src={Sparkle} alt="Sparkle" />
-      <JacketImg src={jacketImage} alt="Custom Jacket" />
+      <Link to="/customise">
+        <JacketImg src={jacketImage} alt="Custom Jacket" />
+      </Link>
       <CustomiseLabel to="/customise">customise</CustomiseLabel>
     </JacketWrapper>
   );

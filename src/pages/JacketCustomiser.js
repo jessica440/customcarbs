@@ -279,8 +279,10 @@ const JacketCustomiser = () => {
     return extras[label] ? total + price : total;
   }, 0);
 
-  const finalPrice = BASE_PRICE + extrasCost;
+  const panelCost =
+    (panelType === "3" ? 10 : 0) + (bodyPanelType === "3" ? 10 : 0);
 
+  const finalPrice = BASE_PRICE + extrasCost + panelCost;
   return (
     <Wrapper>
       <Header>

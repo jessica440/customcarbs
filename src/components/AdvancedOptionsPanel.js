@@ -31,13 +31,13 @@ const AdvancedOptionsPanel = ({
     setExtras((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(true);
 
   return (
     <PanelWrapper>
-      <SectionTitle onClick={() => setIsOpen(!isOpen)}>
+      {/* <SectionTitle onClick={() => setIsOpen(!isOpen)}>
         ADVANCED OPTIONS {isOpen ? "▲" : "▼"}
-      </SectionTitle>
+      </SectionTitle> */}
       {isOpen && (
         <>
           <ToggleRow>
@@ -68,7 +68,7 @@ const AdvancedOptionsPanel = ({
                 $selected={panelType === "2"}
                 onClick={() => setPanelType("2")}
               >
-                <img src="/images/2panel.svg" alt="2 panel" />
+                {/* <img src="/images/2panel.svg" alt="2 panel" /> */}
                 <OptionText>
                   <strong>2 panel</strong>
                   <br />
@@ -83,7 +83,7 @@ const AdvancedOptionsPanel = ({
                 $selected={panelType === "3"}
                 onClick={() => setPanelType("3")}
               >
-                <img src="/images/3panel.svg" alt="3 panel" />
+                {/* <img src="/images/3panel.svg" alt="3 panel" /> */}
                 <OptionText>
                   <strong>3 panel</strong>
                   <br />
@@ -133,7 +133,7 @@ const AdvancedOptionsPanel = ({
               {[
                 { label: "hood", price: 30 },
                 { label: "inside pocket", price: 8 },
-                { label: "knitted cuffs", price: 30 },
+                // { label: "knitted cuffs", price: 30 },
               ].map(({ label, price }) => (
                 <ExtraItem key={label}>
                   <input
