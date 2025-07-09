@@ -30,7 +30,7 @@ const AdvancedOptionsPanel = ({
   };
 
   const [isOpen, setIsOpen] = React.useState(true);
-
+  console.log(setIsOpen);
   return (
     <PanelWrapper>
       {/* <SectionTitle onClick={() => setIsOpen(!isOpen)}>
