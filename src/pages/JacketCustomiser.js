@@ -33,7 +33,7 @@ const BackButton = styled.button`
   color: var(--button-text);
   font-size: 1rem;
   padding: 0.5rem 1rem;
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
   border: none;
   border-radius: 50px;
   cursor: url(${Pointer}) 0 0, pointer;
@@ -283,9 +283,7 @@ const JacketCustomiser = () => {
       <Header>
         {/* <Brand>custom carbs</Brand> */}
         <BackButton onClick={() => navigate(-1)}>Back</BackButton>
-
         {/* <Title>customise your jacket</Title> */}
-
         <HelpIcon onClick={() => setShowHelp(true)}>
           <img src={HelpIconImg} alt="Help" />
         </HelpIcon>

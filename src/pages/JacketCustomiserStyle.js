@@ -30,7 +30,13 @@ export const ContentArea = styled.div`
 `;
 
 export const Header = styled.header`
-  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 16px;
+  position: relative;
+  margin-top: -10px;
+
   /* margin-bottom: 2rem; */
 `;
 
@@ -147,6 +153,7 @@ export const JacketDisplay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: -50px;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -184,7 +191,7 @@ export const CategoryTitle = styled.h4`
   background: black;
   color: white;
   padding: 0.5rem;
-  margin: 0;
+  margin-top: -20px;
   text-transform: lowercase;
   font-size: 1rem;
 `;
@@ -193,7 +200,6 @@ export const ExtrasLabel = styled.div`
   background: ${(props) => (props.active ? "black" : "white")};
   color: ${(props) => (props.active ? "white" : "black")};
   padding: 0.5rem;
-  /* margin: 0.5rem; */
   font-weight: bold;
   text-transform: lowercase;
   text-align: center;

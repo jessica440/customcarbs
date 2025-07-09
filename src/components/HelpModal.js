@@ -37,13 +37,10 @@ const Close = styled.button`
 `;
 
 export const HelpIcon = styled.button`
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  font-size: 1.5rem;
   background: none;
   border: none;
   z-index: 50;
+  cursor: url(${Pointer}) 0 0, pointer;
   img {
     width: 35px;
     height: 35px;
