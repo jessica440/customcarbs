@@ -22,6 +22,12 @@ import {
   ArrowRight,
   MobileArrowWrapper,
 } from "./CustomOrdersStyle";
+import useImagesLoaded from "../hooks/useImagesLoaded";
+import Loader from "../components/Loader";
+
+// import LoadingImage from "../components/LoadingImage";
+
+const imageList = [Banner, Prev, Next, ...steps.map((step) => step.image)];
 
 const CustomOrders = () => {
   const handlePrev = () => {
@@ -46,6 +52,12 @@ const CustomOrders = () => {
     const timeout = setTimeout(() => setPop(false), 300);
     return () => clearTimeout(timeout);
   }, [currentStep]);
+
+  const allImagesLoaded = useImagesLoaded(imageList);
+
+  if (!allImagesLoaded) {
+    return <Loader />;
+  }
 
   return (
     <PageContainer>

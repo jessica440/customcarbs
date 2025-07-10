@@ -26,6 +26,8 @@ import {
   SwatchScrollArea,
   MainScrollArea,
 } from "./JacketCustomiserStyle";
+import useImagesLoaded from "../hooks/useImagesLoaded";
+import Loader from "../components/Loader";
 
 const BackButton = styled.button`
   display: inline-block;
@@ -70,6 +72,13 @@ const mirrorMap = {
   "wristband-left": "wristband-right",
   "wristband-right": "wristband-left",
 };
+
+const imageList = [
+  HelpIconImg,
+  ...fabricOptions,
+  "/images/2panel.svg",
+  "/images/3panel.svg",
+];
 
 const JacketCustomiser = () => {
   const navigate = useNavigate();
@@ -278,6 +287,10 @@ const JacketCustomiser = () => {
     (panelType === "3" ? 10 : 0) + (bodyPanelType === "3" ? 10 : 0);
 
   const finalPrice = BASE_PRICE + extrasCost + panelCost;
+
+  const allImagesLoaded = useImagesLoaded(imageList);
+  if (!allImagesLoaded) return <Loader />;
+
   return (
     <Wrapper>
       <Header>
