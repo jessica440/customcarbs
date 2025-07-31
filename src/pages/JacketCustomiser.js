@@ -274,7 +274,7 @@ const JacketCustomiser = () => {
     setModalOpen(true);
   };
 
-  const BASE_PRICE = 250;
+  const BASE_PRICE = 185;
   const extrasList = [
     { label: "hood", price: 30 },
     { label: "inside pocket", price: 8 },

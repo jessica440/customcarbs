@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.body {
+  cursor: url("../images/pointer2.svg") 0 0, pointer;
+}
