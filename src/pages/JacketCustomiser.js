@@ -26,7 +26,6 @@ import {
   SwatchScrollArea,
   MainScrollArea,
   PanelWrapper,
-  MainArea,
 } from "./JacketCustomiserStyle";
 import useImagesLoaded from "../hooks/useImagesLoaded";
 import Loader from "../components/Loader";
