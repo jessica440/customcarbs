@@ -17,7 +17,7 @@ const Swatch = styled.img`
   object-fit: cover;
   border: 2px solid #eee;
   border-radius: 8px;
-  cursor: pointer;
+  /* cursor: pointer; */
 `;
 
 export default function SwatchSelector() {

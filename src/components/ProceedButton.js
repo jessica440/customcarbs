@@ -23,7 +23,7 @@ const ProceedButton = styled(Link)`
   padding: 0.8rem 1.5rem;
   margin-top: 2rem;
   border-radius: 50px;
-  cursor: url(${Pointer}) 0 0, pointer;
+  /* cursor: url(${Pointer}) 0 0, pointer; */
   text-decoration: none;
   &:hover {
     background: var(--purple);
