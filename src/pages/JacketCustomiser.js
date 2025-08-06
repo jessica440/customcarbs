@@ -25,12 +25,15 @@ import {
   Price,
   SwatchScrollArea,
   MainScrollArea,
+  PanelWrapper,
+  MainArea,
 } from "./JacketCustomiserStyle";
 import useImagesLoaded from "../hooks/useImagesLoaded";
 import Loader from "../components/Loader";
 
 const BackButton = styled.button`
   display: inline-block;
+  z-index: 50;
   background-color: var(--button);
   color: var(--button-text);
   font-size: 1rem;
@@ -274,7 +277,7 @@ const JacketCustomiser = () => {
     setModalOpen(true);
   };
 
-  const BASE_PRICE = 185;
+  const BASE_PRICE = 225;
   const extrasList = [
     { label: "hood", price: 30 },
     { label: "inside pocket", price: 8 },
@@ -304,18 +307,17 @@ const JacketCustomiser = () => {
       </Header>
 
       <CustomiserLayout>
+        <JacketDisplay>
+          <JacketSVG
+            onPanelClick={handlePanelClick}
+            panelFills={panelFills}
+            selectedPanel={selectedPanel}
+            panelType={panelType}
+            bodyPanelType={bodyPanelType}
+            mirrorSides={mirrorSides}
+          />
+        </JacketDisplay>
         <MainScrollArea>
-          <JacketDisplay>
-            <JacketSVG
-              onPanelClick={handlePanelClick}
-              panelFills={panelFills}
-              selectedPanel={selectedPanel}
-              panelType={panelType}
-              bodyPanelType={bodyPanelType}
-              mirrorSides={mirrorSides}
-            />
-          </JacketDisplay>
-
           <FabricPicker>
             <CategoryTitle>
               <ExtrasLabel
@@ -330,33 +332,45 @@ const JacketCustomiser = () => {
                 advanced options
               </ExtrasLabel>
             </CategoryTitle>
+            <PanelWrapper>
+              <div
+                style={{ position: "relative", flex: 1, overflow: "hidden" }}
+              >
+                <SwatchScrollArea
+                  style={{ display: advanced ? "none" : "block" }}
+                >
+                  <Swatches>
+                    {fabricOptions.map((img, i) => (
+                      <Swatch
+                        key={i}
+                        src={img}
+                        onClick={() => handleSwatchClick(img)}
+                      />
+                    ))}
+                  </Swatches>
+                </SwatchScrollArea>
 
-            {!advanced ? (
-              <SwatchScrollArea>
-                <Swatches>
-                  {fabricOptions.map((img, i) => (
-                    <Swatch
-                      key={i}
-                      src={img}
-                      onClick={() => handleSwatchClick(img)}
-                    />
-                  ))}
-                </Swatches>
-              </SwatchScrollArea>
-            ) : (
-              <AdvancedOptionsPanel
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-                panelType={panelType}
-                setPanelType={setPanelType}
-                bodyPanelType={bodyPanelType}
-                setBodyPanelType={setBodyPanelType}
-                mirrorSides={mirrorSides}
-                setMirrorSides={setMirrorSides}
-                extras={extras}
-                setExtras={setExtras}
-              />
-            )}
+                <div
+                  style={{
+                    display: advanced ? "block" : "none",
+                    height: "100%",
+                  }}
+                >
+                  <AdvancedOptionsPanel
+                    activeTab={activeTab}
+                    setActiveTab={setActiveTab}
+                    panelType={panelType}
+                    setPanelType={setPanelType}
+                    bodyPanelType={bodyPanelType}
+                    setBodyPanelType={setBodyPanelType}
+                    mirrorSides={mirrorSides}
+                    setMirrorSides={setMirrorSides}
+                    extras={extras}
+                    setExtras={setExtras}
+                  />
+                </div>
+              </div>
+            </PanelWrapper>
           </FabricPicker>
         </MainScrollArea>
       </CustomiserLayout>

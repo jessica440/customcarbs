@@ -20,12 +20,12 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  /* overflow: hidden; */
+  overflow: hidden;
 `;
 
 export const ContentArea = styled.div`
   flex: 1;
-  overflow-y: hidden;
+  overflow-y: auto;
   padding-bottom: 6rem;
 `;
 
@@ -36,6 +36,10 @@ export const Header = styled.header`
   padding: 12px 16px;
   position: relative;
   margin-top: -10px;
+  height: 60px;
+  @media (max-width: 768px) {
+    margin-top: 0;
+  }
 
   /* margin-bottom: 2rem; */
 `;
@@ -60,20 +64,24 @@ export const Subtitle = styled.p`
 
 export const CustomiserLayout = styled.div`
   display: flex;
-   position: sticky;
-   bottom: 0;
+  position: sticky;
+  bottom: 0;
   flex-direction: column;
   justify-content: space-between;
   flex-wrap: wrap;
   overflow: hidden;
-  flex; 1;
+  flex: 1;
   gap: 2rem;
-  height: 100vh;
+  height: 100%;
   box-sizing: border-box;
 
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
+  }
+  @media (min-width: 769px) {
+    flex-direction: row;
+    align-items: stretch;
   }
 `;
 
@@ -82,6 +90,11 @@ export const MainScrollArea = styled.div`
   overflow-y: auto;
   padding: 1rem;
   box-sizing: border-box;
+  margin-top: -2rem;
+  @media (min-width: 769px) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
 `;
 
 export const OptionsPanel = styled.div`
@@ -154,12 +167,23 @@ export const JacketDisplay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -30px;
+  /* margin-top: -10px; */
+  flex-shrink: 0;
 
   @media (max-width: 768px) {
     width: 100%;
     height: 250px;
     margin-bottom: 1rem;
+  }
+
+  @media (min-width: 769px) {
+    width: 60%;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    align-items: flex-start;
+    padding-left: 1rem;
+    margin-top: -1rem;
   }
 
   .clickable-panel {
@@ -179,12 +203,21 @@ export const JacketDisplay = styled.div`
 
 export const FabricPicker = styled.div`
   flex: 1;
-  max-width: 180px;
+  max-width: 400px;
   cursor: url(${Pointer}) 0 0, pointer;
-
   @media (max-width: 768px) {
     width: 100%;
     max-width: 100%;
+  }
+  @media (min-width: 769px) {
+    max-width: 400px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    padding: 0.5rem;
+    box-sizing: border-box;
   }
 `;
 
@@ -192,9 +225,11 @@ export const CategoryTitle = styled.h4`
   background: black;
   color: white;
   padding: 0.5rem;
-  margin-top: -20px;
   text-transform: lowercase;
   font-size: 1rem;
+  @media (max-width: 768px) {
+    margin-top: -20px;
+  }
 `;
 
 export const ExtrasLabel = styled.div`
@@ -210,17 +245,16 @@ export const ExtrasLabel = styled.div`
   height: 15px;
 
   &:hover {
-    background: ${(props) => (props.active ? "black" : "#f0f0f0")};
+    background: ${(props) => (props.active ? "black" : "#dbf9c7ff")};
   }
 `;
 
 export const Swatches = styled.div`
   display: flex;
-  justify-content: center;
+  justify-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0.5rem;
-  border: 1px solid black;
   width: 100%;
 `;
 
@@ -237,34 +271,40 @@ export const Swatch = styled.img`
 `;
 
 export const SwatchScrollArea = styled.div`
-  max-height: 60vh;
+  height: 100%;
+  /* max-height: 60vh; */
+  border: 1px solid black;
   overflow-y: auto;
   overflow-x: hidden;
   margin-top: 1rem;
   padding-bottom: 6rem;
   -webkit-overflow-scrolling: touch;
+  flex: 1;
 
   @media (max-width: 768px) {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    justify-items: center;
+    display: flex;
+    /* grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); */
+    /* justify-items: center; */
     justify-content: center;
     gap: 1rem;
     padding: 0 1rem 6rem;
-    max-height: 400px;
+    /* max-height: 400px; */
     overflow-y: auto;
     overflow-x: hidden;
     width: 100%;
-    padding: 0 1rem;
+    /* padding: 0 1rem; */
     box-sizing: border-box;
   }
 
   @media (min-width: 769px) {
-    max-height: none;
-    overflow: visible;
+    max-height: calc(100vh - 200px);
+    width: 100%;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 1rem 6rem;
+    box-sizing: border-box;
   }
 
   /* optional scrollbar styling */
@@ -275,6 +315,22 @@ export const SwatchScrollArea = styled.div`
     background: rgba(0, 0, 0, 0.3);
     border-radius: 3px;
   }
+`;
+
+export const PanelWrapper = styled.div`
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+`;
+
+export const MainArea = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 `;
 
 export const Summary = styled.div`
