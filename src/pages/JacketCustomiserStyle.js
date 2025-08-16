@@ -241,6 +241,8 @@ export const ExtrasLabel = styled.div`
   text-align: center;
   cursor: url(${Pointer}) 0 0, pointer;
   border: 1px solid black;
+  border-radius: 2px;
+
   flex: 1;
   height: 15px;
 
@@ -273,7 +275,8 @@ export const Swatch = styled.img`
 export const SwatchScrollArea = styled.div`
   height: 100%;
   /* max-height: 60vh; */
-  border: 1px solid black;
+  border: 2px solid black;
+  border-radius: 2px;
   overflow-y: auto;
   overflow-x: hidden;
   margin-top: 1rem;
@@ -286,7 +289,7 @@ export const SwatchScrollArea = styled.div`
     /* grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); */
     /* justify-items: center; */
     justify-content: center;
-    gap: 1rem;
+    gap: 0.8rem;
     padding: 0 1rem 6rem;
     /* max-height: 400px; */
     overflow-y: auto;

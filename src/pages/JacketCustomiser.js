@@ -328,7 +328,7 @@ const JacketCustomiser = () => {
                   "swatches"}
               </ExtrasLabel>
               <ExtrasLabel active={advanced} onClick={() => setAdvanced(true)}>
-                advanced options
+                ⚙️ advanced options
               </ExtrasLabel>
             </CategoryTitle>
             <PanelWrapper>

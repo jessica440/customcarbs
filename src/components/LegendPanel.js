@@ -106,7 +106,10 @@ const LegendPanel = ({ panelFills, panelType, bodyPanelType, extras }) => {
     return extras[label] ? sum + price : sum;
   }, 0);
 
-  const finalPrice = BASE_PRICE + extrasTotal;
+  const panelCost =
+    (panelType === "3" ? 10 : 0) + (bodyPanelType === "3" ? 10 : 0);
+
+  const finalPrice = BASE_PRICE + extrasTotal + panelCost;
 
   return (
     <LegendWrapper>
